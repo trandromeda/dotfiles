@@ -152,7 +152,6 @@ let g:ale_fixers = {
 \   'json': ['fixjson']
 \}
 
-
 " Set lint and fix occasions
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_save = 1
@@ -178,6 +177,7 @@ let g:airline_left_sep = ''
 let g:airline#extensions#branch#format = 2
 let g:airline#extensions#branch#enabled = 1
 
+
 "=====================================================
 "" Fugitive settings
 "=====================================================
@@ -196,6 +196,7 @@ noremap <Leader>gl :Gpull<CR>
 noremap <Leader>gst :Gstatus<CR>
 noremap <Leader>gbl :Gblame<CR>
 noremap <Leader>grm :Gremove<CR>
+
 
 "=====================================================
 "" fzf settings
@@ -238,6 +239,7 @@ inoremap <silent> <F1> <ESC>:FzfHelptags<CR>
 cnoremap <silent> <expr> <C-p> getcmdtype() == ":" ? "<C-u>:FzfHistory:\<CR>" : "\<ESC>:FzfHistory/\<CR>"
 cnoremap <silent> <C-_> <C-u>:FzfCommands<CR>
 
+
 "=====================================================
 "" vim-markdown, vim-markdown-preview settings
 "=====================================================
@@ -249,6 +251,7 @@ let vim_markdown_preview_pandoc=1
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
 
+
 "=====================================================
 "" vimtex, settings
 "=====================================================
@@ -258,6 +261,7 @@ let g:vimtex_view_method='skim'
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
 let g:vimtex_quickfix_mode=0
 let g:vimtex_fold_enabled=1
+
 
 "=====================================================
 "" UltiSnips settings
@@ -277,6 +281,7 @@ let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/bundle/vim-snippets/UltiSnips'
 set conceallevel=1
 let g:tex_conceal='abdmg'
 hi Conceal ctermbg=none
+
 
 "=====================================================
 "" NERDTree settings
@@ -299,12 +304,14 @@ let NERDTreeShowHidden = 1
 " Autoclose VIM if NERDTree is only window open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+
 "=====================================================
 "" Limelight settings
 "=====================================================
 
 let g:limelight_conceal_ctermfg = 238
 let g:limelight_paragraph_span = 1
+
 
 "=====================================================
 "" vim-slime settings
@@ -314,12 +321,10 @@ let g:slime_target = "tmux"
 let g:slime_default_config = {"socket_name": "default", "target_pane": "{last}"}
 let g:slime_python_ipython = 1
 
-"=====================================================
-"" General settings
-"=====================================================
 
-" Write daily note on exit
-autocmd BufWritePost *dailynote-*.md silent! execute "!bash buildnote.sh %:p" | redraw!
+"=====================================================
+"" File-specific settings
+"=====================================================
 
 " Automatically reread file if changed outside of vim
 set autoread
@@ -328,27 +333,31 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
 autocmd FileChangedShellPost *
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
-set tabstop=4
-set shiftwidth=4
-set expandtab
+" Python settings
+augroup Python
+    au BufNewFile,BufRead *.py
+      \ setlocal tabstop=4 shiftwidth=4 expandtab textwidth=79 autoindent fileformat=unix
+augroup END
+
+" SQL settings
+augroup SQL
+    au BufNewFile,BufRead *.sql
+      \ setlocal tabstop=2 shiftwidth=2 expandtab textwidth=119 autoindent fileformat=unix
+      \ setlocal commentstring=--\ %s
+augroup END
 
 " Textfile settings
 let g:markdown_folding=1
 let g:markdown_enable_folding = 1
 augroup Textfiles
-  " autocmd! BufNewFile,BufReadPost *.{md,markdown,mdown,mkd,mdtxt,Rmd,mkdn,tex,latex}
-  autocmd FileType latex,tex,md,markdown setlocal spell
-  autocmd FileType latex,tex,md,markdown setlocal conceallevel=2
+  autocmd BufNewFile,BufRead *.{md,markdown,mdown,mkd,mdtxt,Rmd,mkdn,tex,latex}
+    \ setlocal spell conceallevel=2 linebreak spelllang=en_us
 
   " Proper syntax highlighting for math mode in markdown
   autocmd FileType latex,tex,md,markdown syn region match start=/\\$\\$/ end=/\\$\\$/
   autocmd FileType latex,tex,md,markdown syn match math '\\$[^$].\{-}\$'
 
-  " Prevent physical wrapping
-  autocmd FileType latex,tex,md,markdown setlocal linebreak
-
   " Fix spelling mistakes on fly
-  autocmd FileType latex,tex,md,markdown setlocal spelllang=en_us
   autocmd FileType latex,tex,md,markdown inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
   " Change SpellBad format (ALE uses SpellBad for lint highlighting)
@@ -357,11 +366,14 @@ augroup END
 
 " YAML settings
 augroup YAML
-    autocmd! BufNewFile,BufReadPost *.{yaml,yml}
-    set filetype=yaml
-    autocmd FileType yaml setlocal ts=2 sts=2 sw=2
-    autocmd FileType yaml setlocal expandtab
+    autocmd BufNewFile,BufRead *.{yaml,yml}
+      \ setlocal filetype=yaml sts=2 sw=2 expandtab
 augroup END
+
+
+"=====================================================
+"" General settings
+"=====================================================
 
 " Set allow modified buffers to be hidden
 set hidden
@@ -505,3 +517,11 @@ set mouse=a
 " Quick buffer switching
 map <F9> :bp<CR>
 map <F10> :bn<CR>
+
+
+"=====================================================
+"" Miscellaneous settings
+"=====================================================
+
+" Write daily note on exit
+autocmd BufWritePost *dailynote-*.md silent! execute "!bash buildnote.sh %:p" | redraw!

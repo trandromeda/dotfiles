@@ -138,7 +138,6 @@ alias copa="pbcopy; pbpaste"
 alias alup="alias | fzf"
 alias reload="source ~/.zshrc"
 alias tldr="tldr $1 -t base16"
-alias gistoe="gist -o -e"
 alias gbol='git fetch --prune && git branch -r | awk "{print \$1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk "{print \$1}"'
 alias n='~/bin/makenote.sh'
 alias mrn='~/bin/getlastnote.sh'
