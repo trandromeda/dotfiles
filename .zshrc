@@ -143,6 +143,16 @@ alias gbol='git fetch --prune && git branch -r | awk "{print \$1}" | egrep -v -f
 alias n='~/bin/makenote.sh'
 alias mrn='~/bin/getlastnote.sh'
 
+
+## General custom functions
+function astro_ts_utc_local() {
+    # Returns UTC timestamp in Airflow format to local time
+    # e.g., 2021-02-13T01:54:59.672021Z ➔ Fri Feb 12 20:54:59 EST 2021
+    second_precision_time=$(cut -d'.' -f1 <<< ${1:-$(</dev/stdin)})
+    date -j -f "%s" $(date -j -u -f "%Y-%m-%dT%T" "${second_precision_time}" "+%s") | tee >(pbcopy)
+}
+
+
 ## DBT custom functions
 
 # Cycle DBT logs
@@ -155,7 +165,7 @@ function cycle_logs() {
 function dbt_run_test() {
     models=$1
     echo "Running & testing: ${models}"
-    dbt run --models $models | tee && dbt test --models $models | tee >(pbcopy);
+    dbt run --models ${models} | tee && dbt test --models ${models} | tee >(pbcopy);
 }
 
 # Build downstream dependencies for all models changes in working directory
@@ -163,9 +173,9 @@ function dbt_run_test() {
 function dbt_run_changed() {
     children=$1
     if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = "true" ]; then
-        models=$(git diff --name-only | grep '\.sql$' | awk -F '/' '{ print $NF }' | sed "s/\.sql$/${children}/g" | tr '\n' ' ')
+        models="$(git diff --name-only | grep '\.sql$' | awk -F '/' '{ print $NF }' | sed "s/\.sql$/${children}/g" | tr '\n' ' ')"
         echo "Running models: ${models}"
-        dbt run --models $models;
+        dbt run --models ${models};
     else
         git rev-parse --git-dir > /dev/null 2>&1;
     fi;
@@ -204,6 +214,10 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 
 ### THEME/VISUAL CUSTOMIZATION ###
+
+# Let vi-mode plugin change cursor based on mode
+VI_MODE_SET_CURSOR=true
+
 
 # Add custom icon to prompt
 POWERLEVEL9K_CUSTOM_OS_ICON='echo 🌞'

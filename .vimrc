@@ -53,8 +53,6 @@ Plugin 'VundleVim/Vundle.vim'
     Plugin 'dracula/vim', { 'name': 'dracula' } " Add dracula theme
     Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plugin 'junegunn/fzf.vim'                   " Fuzzy finder plugins
-    Plugin 'mattn/webapi-vim'                   " Requirement for Gist.vim
-    Plugin 'mattn/vim-gist'                     " Automatically post Gists to GH
 
     "-------------------=== Languages support ===-------------------
     Plugin 'tpope/vim-surround'                 " Parentheses, brackets, quotes, XML tags, and more
@@ -151,6 +149,7 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'python': ['black'],
+\   'json': ['fixjson']
 \}
 
 
@@ -299,25 +298,6 @@ let NERDTreeShowHidden = 1
 
 " Autoclose VIM if NERDTree is only window open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-"=====================================================
-"" vim-Gist settings
-"=====================================================
-
-" Use Flexport Github Enterprise API
-let g:gist_api_url = 'https://github.flexport.io/api/v3'
-
-" Use -c option to copy to clipboard
-let g:gist_clip_command = 'pbcopy'
-
-" Detect gist filtype automatically
-let g:gist_detect_filetype = 1
-
-" Make Gists private by default
-let g:gist_post_private = 1
-
-" Open browser to show Gist
-let g:gist_open_browser_after_post = 1
 
 "=====================================================
 "" Limelight settings
@@ -521,3 +501,7 @@ vnoremap K :m '<-2<CR>gv=gv
 
 " Mouse scroll behavior
 set mouse=a
+
+" Quick buffer switching
+map <F9> :bp<CR>
+map <F10> :bn<CR>
