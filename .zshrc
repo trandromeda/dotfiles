@@ -341,12 +341,15 @@ export KMO_HOME="~/code/kimono"
 
 # TODO: Add gist configurations to allow for posting to personal and work
 # Github via CLI
-export GITHUB_URL="https://github.flexport.io/"
+export GITHUB_URL="https://github.flexport.io"
 
 # TODO: Write shell function that will set/unset GitHub URL for personal vs.
 # work; also include copy and open in browser flags by default
 
-# helm2
+## Github CLI
+export GH_HOST="$(echo ${GITHUB_URL} | cut -c 9-)" # removes https://
+
+## helm2
 export PATH="/usr/local/opt/helm@2/bin:$PATH"
 source <(helm completion zsh)
 source <(kubectl completion zsh)

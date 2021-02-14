@@ -69,6 +69,7 @@ Plugin 'VundleVim/Vundle.vim'
     Plugin 'godlygeek/tabular'                  " Tool for code visual alignment
     Plugin 'plasticboy/vim-markdown'            " Markdown support
     Plugin 'KeitaNakamura/tex-conceal.vim'      " LaTeX concealment
+    Plugin 'sheerun/vim-polyglot'               " General purpose language syntax highlighter
 
     "-------------------=== Tmux/terminal interaction ===-------------
     Plugin 'jpalardy/vim-slime'                 " Turn vim + tmux into REPL
