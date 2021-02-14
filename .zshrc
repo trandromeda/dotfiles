@@ -337,17 +337,11 @@ export SNOWFLAKE_PRIVATE_KEY_PATH="~/.ssh/snowflake_key"
 
 export KMO_HOME="~/code/kimono"
 
-## Gist
-
-# TODO: Add gist configurations to allow for posting to personal and work
-# Github via CLI
-export GITHUB_URL="https://github.flexport.io"
-
-# TODO: Write shell function that will set/unset GitHub URL for personal vs.
-# work; also include copy and open in browser flags by default
-
 ## Github CLI
+# TODO: gist is being outcompeted by consolidated github CLI (gh)
+export GITHUB_URL="https://github.flexport.io"
 export GH_HOST="$(echo ${GITHUB_URL} | cut -c 9-)" # removes https://
+
 
 ## helm2
 export PATH="/usr/local/opt/helm@2/bin:$PATH"

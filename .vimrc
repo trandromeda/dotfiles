@@ -41,9 +41,11 @@ Plugin 'VundleVim/Vundle.vim'
 
     "-------------------=== Code/Project navigation ===-------------
     Plugin 'preservim/nerdtree'                 " File navigation
-    Plugin 'tpope/vim-fugitive'                 " Github wrapper
+    Plugin 'tpope/vim-fugitive'                 " Git wrapper
+    Plugin 'tpope/vim-rhubarb'                  " Github wrapper
     Plugin 'mhinz/vim-signify'                  " Show git file changes in gutter
     Plugin 'tpope/vim-unimpaired'               " Useful [] mappings
+    Plugin 'stsewd/fzf-checkout.vim'            " Fzf + git branches and tags management
 
     "-------------------=== Other ===-------------------------------
     Plugin 'junegunn/limelight.vim'             " Limelight
@@ -143,19 +145,21 @@ nmap <leader>D <plug>(YCMHover)
 " Set linters
 let g:ale_linters = {
 \   'python': ['flake8'],
-\   'markdown': ['mdl']
+\   'markdown': ['mdl'],
+\   'sql': ['sqlfluff']
 \}
 
 " Set fixers
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'python': ['black'],
-\   'json': ['fixjson']
+\   'python': ['black', 'isort'],
+\   'javascript': ['prettier'],
+\   'json': ['fixjson'],
+\   'css': ['prettier']
 \}
 
 " Set lint and fix occasions
 let g:ale_fix_on_save = 1
-let g:ale_lint_on_save = 1
 let g:ale_python_black_auto_pipenv = 1
 
 " Customize linter feedback visuals
@@ -164,6 +168,12 @@ let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️ '
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
+let g:ale_set_highlights = 1
+
+" Keybindings
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
 
 "=====================================================
 "" Airline settings
@@ -178,9 +188,11 @@ let g:airline_left_sep = ''
 let g:airline#extensions#branch#format = 2
 let g:airline#extensions#branch#enabled = 1
 
+" Enable ALE extensions in Airline
+let g:airline#extensions#ale#enabled = 1
 
 "=====================================================
-"" Fugitive settings
+"" Fugitive / Rhubarb settings
 "=====================================================
 
 " Fugitive merge conflict resolution
@@ -188,16 +200,7 @@ nnoremap <leader>gd :Gvdiffsplit!<cr>
 nnoremap gdh :diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
 
-" Git workflow
-noremap <Leader>gs :G<CR>
-noremap <Leader>ga :Gwrite<CR>
-noremap <Leader>gc :Gcommit<CR>
-noremap <Leader>gp :Gpush<CR>
-noremap <Leader>gl :Gpull<CR>
-noremap <Leader>gst :Gstatus<CR>
-noremap <Leader>gbl :Gblame<CR>
-noremap <Leader>grm :Gremove<CR>
-
+let g:github_enterprise_urls = ['https://github.flexport.io']
 
 "=====================================================
 "" fzf settings
@@ -376,6 +379,9 @@ augroup END
 "" General settings
 "=====================================================
 
+" Set no wrapping
+set nowrap
+
 " Set allow modified buffers to be hidden
 set hidden
 
@@ -514,10 +520,6 @@ vnoremap K :m '<-2<CR>gv=gv
 
 " Mouse scroll behavior
 set mouse=a
-
-" Quick buffer switching
-map <F9> :bp<CR>
-map <F10> :bn<CR>
 
 
 "=====================================================
