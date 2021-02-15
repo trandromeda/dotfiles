@@ -48,11 +48,11 @@ Plugin 'VundleVim/Vundle.vim'
     Plugin 'stsewd/fzf-checkout.vim'            " Fzf + git branches and tags management
 
     "-------------------=== Other ===-------------------------------
+    Plugin 'dracula/vim', { 'name': 'dracula' } " Add dracula theme
     Plugin 'junegunn/limelight.vim'             " Limelight
     Plugin 'vim-airline/vim-airline'            " Status bar plugin
     Plugin 'vim-airline/vim-airline-themes'     " Status bar plugin themes
     Plugin 'ryanoasis/vim-devicons'             " Adds icons to vim plugins
-    Plugin 'dracula/vim', { 'name': 'dracula' } " Add dracula theme
     Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plugin 'junegunn/fzf.vim'                   " Fuzzy finder plugins
 
@@ -66,12 +66,12 @@ Plugin 'VundleVim/Vundle.vim'
     Plugin 'SirVer/ultisnips'                   " Snippet tool
 
     "-------------------=== Code linting/syntax ===-------------------
-    Plugin 'dense-analysis/ale'                 " General purpose linter
-    Plugin 'lervag/vimtex'                      " LaTeX support
-    Plugin 'godlygeek/tabular'                  " Tool for code visual alignment
-    Plugin 'plasticboy/vim-markdown'            " Markdown support
-    Plugin 'KeitaNakamura/tex-conceal.vim'      " LaTeX concealment
+    Plugin 'dense-analysis/ale'                 " General purpose linter and fixer framework
     Plugin 'sheerun/vim-polyglot'               " General purpose language syntax highlighter
+    Plugin 'lervag/vimtex'                      " LaTeX support
+    Plugin 'KeitaNakamura/tex-conceal.vim'      " LaTeX concealment
+    Plugin 'godlygeek/tabular'                  " Tool for visual alignment
+    Plugin 'plasticboy/vim-markdown'            " Markdown support
 
     "-------------------=== Tmux/terminal interaction ===-------------
     Plugin 'jpalardy/vim-slime'                 " Turn vim + tmux into REPL
@@ -145,22 +145,25 @@ nmap <leader>D <plug>(YCMHover)
 " Set linters
 let g:ale_linters = {
 \   'python': ['flake8'],
-\   'markdown': ['mdl'],
-\   'sql': ['sqlfluff']
+\   'markdown': ['markdownlint'],
+\   'json': ['jq'],
+\   'yaml': ['yamllint'],
 \}
 
 " Set fixers
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'python': ['black', 'isort'],
-\   'javascript': ['prettier'],
-\   'json': ['fixjson'],
-\   'css': ['prettier']
+\   'markdown': ['prettier'],
+\   'json': ['jq'],
+\   'yaml': ['prettier'],
 \}
 
 " Set lint and fix occasions
+let g:ale_linters_explicit = 1
+let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 1
-let g:ale_python_black_auto_pipenv = 1
+let g:ale_open_list = 1
 
 " Customize linter feedback visuals
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
@@ -168,12 +171,14 @@ let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️ '
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
-let g:ale_set_highlights = 1
+let g:ale_set_highlights = 0
 
 " Keybindings
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
+" Language/env-specific settings
+let g:ale_python_black_auto_pipenv = 1
 
 "=====================================================
 "" Airline settings
@@ -340,14 +345,15 @@ autocmd FileChangedShellPost *
 " Python settings
 augroup Python
     au BufNewFile,BufRead *.py
-      \ setlocal tabstop=4 shiftwidth=4 expandtab textwidth=79 autoindent fileformat=unix
+      \ set tabstop=4 shiftwidth=4 expandtab textwidth=79 fileformat=unix
+      \ autoindent smartindent
 augroup END
 
 " SQL settings
 augroup SQL
     au BufNewFile,BufRead *.sql
-      \ setlocal tabstop=2 shiftwidth=2 expandtab textwidth=119 autoindent fileformat=unix
-      \ setlocal commentstring=--\ %s
+      \ set tabstop=2 shiftwidth=2 expandtab textwidth=119 autoindent fileformat=unix
+      \ commentstring=--\ %s
 augroup END
 
 " Textfile settings
@@ -355,7 +361,7 @@ let g:markdown_folding=1
 let g:markdown_enable_folding = 1
 augroup Textfiles
   autocmd BufNewFile,BufRead *.{md,markdown,mdown,mkd,mdtxt,Rmd,mkdn,tex,latex}
-    \ setlocal spell conceallevel=2 linebreak spelllang=en_us
+    \ set spell conceallevel=2 linebreak spelllang=en_us
 
   " Proper syntax highlighting for math mode in markdown
   autocmd FileType latex,tex,md,markdown syn region match start=/\\$\\$/ end=/\\$\\$/
@@ -371,13 +377,17 @@ augroup END
 " YAML settings
 augroup YAML
     autocmd BufNewFile,BufRead *.{yaml,yml}
-      \ setlocal filetype=yaml sts=2 sw=2 expandtab
+      \ set filetype=yaml sts=2 sw=2 expandtab
 augroup END
 
 
 "=====================================================
 "" General settings
 "=====================================================
+
+" Use ripgrep as default grep
+set grepprg=rg\ --vimgrep
+
 
 " Set no wrapping
 set nowrap
@@ -411,12 +421,6 @@ set list listchars=tab:▷⋅,trail:⋅,nbsp:⋅
 noremap <F5> :set list!<CR>
 inoremap <F5> <C-o>:set list!<CR>
 cnoremap <F5> <C-c>:set list!<CR>
-
-" Indentation and line length
-au! BufNewFile,BufReadPost *.py
-au FileType *.py set autoindent
-au FileType *.py set smartindent
-au FileType *.py set textwidth=88
 
 " Set line numbers
 set number
@@ -492,11 +496,6 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 
-" Shortcut for making table a dbt ref and source macros
-" (cursor must be on the first character of the table name)
-nmap <leader>ref i{{<Space>ref('<Esc>Ea')<Space>}}<Esc>BvaW:s/\./__/g<Enter>
-nmap <leader>src i{{<Space>source('<Esc>Ea')<Space>}}<Esc>BvaW:s/\./__/g<Enter>
-
 " Italicize comments
 highlight Comment cterm=italic gui=italic
 
@@ -520,6 +519,28 @@ vnoremap K :m '<-2<CR>gv=gv
 
 " Mouse scroll behavior
 set mouse=a
+
+
+"=====================================================
+"" dbt development settings
+"=====================================================
+
+" add .sql when typing gf (go to file under cursor)
+au BufNewFile,BufRead *.sql set suffixesadd+=.sql
+au BufNewFile,BufRead *.md set suffixesadd+=.sql
+au BufNewFile,BufRead *.yml set suffixesadd+=.sql
+
+" make sure you update the paths with the location of dbt in your environment!
+" update path to look for files in dbt directories
+au BufNewFile,BufRead *.sql set path+=$DBT_PROFILES_DIR/dbt/macros/**
+au BufNewFile,BufRead *.sql set path+=$DBT_PROFILES_DIR/dbt/models/**
+
+" yml and md are for opening files from dbt docs files
+au BufNewFile,BufRead *.yml set path+=$DBT_PROFILES_DIR/dbt/macros/**
+au BufNewFile,BufRead *.yml set path+=$DBT_PROFILES_DIR/dbt/models/**
+
+au BufNewFile,BufRead *.md set path+=$DBT_PROFILES_DIR/dbt/macros/**
+au BufNewFile,BufRead *.md set path+=$DBT_PROFILES_DIR/dbt/models/**
 
 
 "=====================================================

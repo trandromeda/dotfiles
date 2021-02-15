@@ -1,0 +1,15 @@
+extends dbt
+
+snippet sgc "select group count"
+select
+	${1},
+	count(*) as freq
+from ${2}
+group by $1
+order by 2 desc
+limit ${3:5};
+endsnippet
+
+snippet inn "is not null"
+is not null
+endsnippet
