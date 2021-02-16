@@ -200,12 +200,17 @@ let g:airline#extensions#ale#enabled = 1
 "" Fugitive / Rhubarb settings
 "=====================================================
 
-" Fugitive merge conflict resolution
-nnoremap <leader>gd :Gvdiffsplit!<cr>
-nnoremap gdh :diffget //2<CR>
-nnoremap gdl :diffget //3<CR>
-
+" Point Fugitive to Flexport's GH instance
 let g:github_enterprise_urls = ['https://github.flexport.io']
+
+" Make going up a level easier for buffers with tree or blob
+autocmd User fugitive
+  \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+  \   nnoremap <buffer> .. :edit %:h<CR> |
+  \ endif
+
+" Autoclean buffer when traversing git repo
+autocmd BufReadPost fugitive://* set bufhidden=delete
 
 "=====================================================
 "" fzf settings
@@ -257,6 +262,7 @@ let vim_markdown_preview_hotkey='<C-M>'
 let vim_markdown_preview_github=1
 let vim_markdown_preview_browser='Google Chrome'
 let vim_markdown_preview_pandoc=1
+let g:vim_markdown_folding_level = 2
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
 
@@ -363,9 +369,12 @@ augroup Textfiles
   autocmd BufNewFile,BufRead *.{md,markdown,mdown,mkd,mdtxt,Rmd,mkdn,tex,latex}
     \ set spell conceallevel=2 linebreak spelllang=en_us
 
-  " Proper syntax highlighting for math mode in markdown
+  " Proper syntax highlighting for math mode
   autocmd FileType latex,tex,md,markdown syn region match start=/\\$\\$/ end=/\\$\\$/
   autocmd FileType latex,tex,md,markdown syn match math '\\$[^$].\{-}\$'
+
+  " For markdown, hardwrap text at 80 characters
+  autocmd FileType md,markdown set textwidth=80 formatoptions+=t
 
   " Fix spelling mistakes on fly
   autocmd FileType latex,tex,md,markdown inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
@@ -473,8 +482,8 @@ set fileencoding=utf-8
 set fileencodings=utf-8
 set ttyfast
 
-" Scroll let for 10 lines
-set scrolloff=10
+" Scroll let for 5 lines
+set scrolloff=5
 
 " ESC mappings
 inoremap jk <Esc>
@@ -525,12 +534,13 @@ set mouse=a
 "" dbt development settings
 "=====================================================
 
-" add .sql when typing gf (go to file under cursor)
+" Add .sql when typing gf (go to file under cursor if file is in same
+" directory)
 au BufNewFile,BufRead *.sql set suffixesadd+=.sql
 au BufNewFile,BufRead *.md set suffixesadd+=.sql
 au BufNewFile,BufRead *.yml set suffixesadd+=.sql
 
-" make sure you update the paths with the location of dbt in your environment!
+" Make sure you update the paths with the location of dbt in your environment!
 " update path to look for files in dbt directories
 au BufNewFile,BufRead *.sql set path+=$DBT_PROFILES_DIR/dbt/macros/**
 au BufNewFile,BufRead *.sql set path+=$DBT_PROFILES_DIR/dbt/models/**
