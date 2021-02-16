@@ -70,8 +70,9 @@ POWERLEVEL9K_MODE='nerdfont-complete'
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Required for some completion plugins (e.g., fzf-tab)
+autoload -U compinit && compinit
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -82,20 +83,18 @@ plugins=(
     # sourcing vi-mode first so fzf keybindings don't get overwritten
     vi-mode
     git
+    gitfast
     colored-man-pages
     fzf
+    fzf-tab
     ripgrep
     aws
     zsh-autosuggestions
     zsh-syntax-highlighting
     virtualenv
-    z
     zsh-z
-    fzf-tab
+    tmux
 )
-
-# Required for some completion plugins (e.g., fzf-tab)
-autoload -U compinit && compinit
 
 # Configure fzf, fzf-tab display settings
 zstyle ":completion:*:git-checkout:*" sort false
@@ -131,7 +130,7 @@ source $ZSH/oh-my-zsh.sh
 alias zshconfig="vim ~/.zshrc"
 alias vimconfig="vim ~/.vimrc"
 alias tmuxconfig="vim ~/.tmux.conf"
-alias ohmyzsh="vim ~/.oh-my-zsh"
+alias ohmyzsh="cd ~/.oh-my-zsh"
 alias cls="clear"
 alias ctree="tree -C"
 alias copa="pbcopy; pbpaste"
@@ -144,6 +143,7 @@ alias mrn='~/bin/getlastnote.sh'
 
 
 ## General custom functions
+
 function astro_ts_utc_local() {
     # Returns UTC timestamp in Airflow format to local time
     # e.g., 2021-02-13T01:54:59.672021Z ➔ Fri Feb 12 20:54:59 EST 2021
@@ -264,14 +264,13 @@ POWERLEVEL9K_TIME_FORMAT='%D{%I:%M %p}'
 # Remove space on right-side prompt
 ZLE_RPROMPT_INDENT=0
 
-## iTerm 2 visual customization settings
+## iTerm 2
 
 # Colorise the top Tabs of Iterm2 with the same color as background
 # Just change the 18/26/33 which are the rgb values
 echo -e "\033]6;1;bg;red;brightness;18\a"
 echo -e "\033]6;1;bg;green;brightness;26\a"
 echo -e "\033]6;1;bg;blue;brightness;33\a"
-
 
 ### CUSTOM ###
 

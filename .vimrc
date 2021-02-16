@@ -61,17 +61,17 @@ Plugin 'VundleVim/Vundle.vim'
     Plugin 'tpope/vim-repeat'                   " Repeat plugin-enabled actions
     Plugin 'ycm-core/YouCompleteMe'             " Code completion, comprehension, refactoring engine
     Plugin 'tpope/vim-commentary'               " Comment stuff out
+    Plugin 'plasticboy/vim-markdown'            " Markdown support
     Plugin 'JamshedVesuna/vim-markdown-preview' " Markdown preview
     Plugin 'honza/vim-snippets'                 " Useful snippet files for various programming languages
+    Plugin 'lervag/vimtex'                      " LaTeX support
+    Plugin 'KeitaNakamura/tex-conceal.vim'      " LaTeX concealment
     Plugin 'SirVer/ultisnips'                   " Snippet tool
 
     "-------------------=== Code linting/syntax ===-------------------
     Plugin 'dense-analysis/ale'                 " General purpose linter and fixer framework
     Plugin 'sheerun/vim-polyglot'               " General purpose language syntax highlighter
-    Plugin 'lervag/vimtex'                      " LaTeX support
-    Plugin 'KeitaNakamura/tex-conceal.vim'      " LaTeX concealment
     Plugin 'godlygeek/tabular'                  " Tool for visual alignment
-    Plugin 'plasticboy/vim-markdown'            " Markdown support
 
     "-------------------=== Tmux/terminal interaction ===-------------
     Plugin 'jpalardy/vim-slime'                 " Turn vim + tmux into REPL
@@ -212,6 +212,24 @@ autocmd User fugitive
 " Autoclean buffer when traversing git repo
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
+
+"=====================================================
+"" Fugitive / Rhubarb settings
+"=====================================================
+
+" Define a diff of two branches with Fugitive
+let g:fzf_branch_actions = {
+      \ 'diff': {
+      \   'prompt': 'Diff> ',
+      \   'execute': 'Git diff {branch}',
+      \   'multiple': v:false,
+      \   'keymap': 'ctrl-f',
+      \   'required': ['branch'],
+      \   'confirm': v:false,
+      \ },
+      \}
+
+
 "=====================================================
 "" fzf settings
 "=====================================================
@@ -262,10 +280,13 @@ let vim_markdown_preview_hotkey='<C-M>'
 let vim_markdown_preview_github=1
 let vim_markdown_preview_browser='Google Chrome'
 let vim_markdown_preview_pandoc=1
+
 let g:vim_markdown_folding_level = 2
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
 
+" Avoid overwriting [c, ]c maps
+let g:vim_markdown_no_default_key_mappings = 1
 
 "=====================================================
 "" vimtex, settings
