@@ -178,7 +178,13 @@ nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Language/env-specific settings
+
+" Python
 let g:ale_python_black_auto_pipenv = 1
+let g:ale_python_flake8_auto_pipenv = 1
+
+" Markdown
+let g:ale_markdown_markdownlint_options = '-c $HOME/.markdownlintrc'
 
 "=====================================================
 "" Airline settings
@@ -281,7 +287,7 @@ let vim_markdown_preview_github=1
 let vim_markdown_preview_browser='Google Chrome'
 let vim_markdown_preview_pandoc=1
 
-let g:vim_markdown_folding_level = 2
+let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
 
@@ -292,11 +298,11 @@ let g:vim_markdown_no_default_key_mappings = 1
 "" vimtex, settings
 "=====================================================
 
-let g:tex_flavor='latex'
-let g:vimtex_view_method='skim'
+let g:tex_flavor= 'latex'
+let g:vimtex_view_method = 'skim'
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
-let g:vimtex_quickfix_mode=0
-let g:vimtex_fold_enabled=1
+let g:vimtex_quickfix_mode = 0
+let g:vimtex_fold_enabled = 1
 
 
 "=====================================================
@@ -372,20 +378,18 @@ autocmd FileChangedShellPost *
 " Python settings
 augroup Python
     au BufNewFile,BufRead *.py
-      \ set tabstop=4 shiftwidth=4 expandtab textwidth=79 fileformat=unix
+      \ set tabstop=4 shiftwidth=4 expandtab textwidth=80 fileformat=unix
       \ autoindent smartindent
 augroup END
 
 " SQL settings
 augroup SQL
     au BufNewFile,BufRead *.sql
-      \ set tabstop=2 shiftwidth=2 expandtab textwidth=119 autoindent fileformat=unix
+      \ set tabstop=2 shiftwidth=2 expandtab textwidth=120 autoindent fileformat=unix
       \ commentstring=--\ %s
 augroup END
 
 " Textfile settings
-let g:markdown_folding=1
-let g:markdown_enable_folding = 1
 augroup Textfiles
   autocmd BufNewFile,BufRead *.{md,markdown,mdown,mkd,mdtxt,Rmd,mkdn,tex,latex}
     \ set spell conceallevel=2 linebreak spelllang=en_us
@@ -465,7 +469,7 @@ set showmatch
 
 " Enable enhanced tab autocompletion for menu (e.g., :e)
 set wildmenu
-set wildmode=list:longest,full
+set wildmode=longest:full,full
 set wildignore+=**/.git/**
 
 " Search down into subfolders
