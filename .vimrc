@@ -26,75 +26,70 @@ let &t_SI = "\<Esc>[5 q"
 autocmd BufEnter * execute 'silent !echo -ne "' . &t_EI . '"'
 
 "=====================================================
-"" Vundle settings
+"" vim-plug settings
 "=====================================================
 
-filetype off                  " required
+" Autoinstaller if vim-plug not installed
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -sfLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall | source ~/.vimrc
+endif
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" Compile YCM
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !python3 $HOME/.vim/plugged/YouCompleteMe/install.py --all
+  endif
+endfunction
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 
     "-------------------=== Code/Project navigation ===-------------
-    Plugin 'preservim/nerdtree'                 " File navigation
-    Plugin 'tpope/vim-fugitive'                 " Git wrapper
-    Plugin 'tpope/vim-rhubarb'                  " Github wrapper
-    Plugin 'mhinz/vim-signify'                  " Show git file changes in gutter
-    Plugin 'tpope/vim-unimpaired'               " Useful [] mappings
-    Plugin 'stsewd/fzf-checkout.vim'            " Fzf + git branches and tags management
+    Plug 'preservim/nerdtree'                                          "  File navigation
+    Plug 'tpope/vim-fugitive'                                          "  Git wrapper
+    Plug 'tpope/vim-rhubarb'                                           "  Github wrapper
+    Plug 'https://github.com/tpope/vim-projectionist'                  "  Project navigation
+    Plug 'mhinz/vim-signify'                                           "  Show git file changes in gutter
+    Plug 'mhinz/vim-signify'                                           "  Show git file changes in gutter
+    Plug 'tpope/vim-unimpaired'                                        "  Useful [] mappings
+    Plug 'stsewd/fzf-checkout.vim'                                     "  Fzf + git branches and tags management
 
     "-------------------=== Other ===-------------------------------
-    Plugin 'dracula/vim', { 'name': 'dracula' } " Add dracula theme
-    Plugin 'junegunn/limelight.vim'             " Limelight
-    Plugin 'vim-airline/vim-airline'            " Status bar plugin
-    Plugin 'vim-airline/vim-airline-themes'     " Status bar plugin themes
-    Plugin 'ryanoasis/vim-devicons'             " Adds icons to vim plugins
-    Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plugin 'junegunn/fzf.vim'                   " Fuzzy finder plugins
+    Plug 'dracula/vim', { 'name': 'dracula' }                          "  Add dracula theme
+    Plug 'junegunn/limelight.vim'                                      "  Limelight
+    Plug 'vim-airline/vim-airline'                                     "  Status bar plugin
+    Plug 'vim-airline/vim-airline-themes'                              "  Status bar plugin themes
+    Plug 'ryanoasis/vim-devicons'                                      "  Adds icons to vim plugins
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'                                            "  Fuzzy finder plugins
 
     "-------------------=== Languages support ===-------------------
-    Plugin 'tpope/vim-surround'                 " Parentheses, brackets, quotes, XML tags, and more
-    Plugin 'tpope/vim-repeat'                   " Repeat plugin-enabled actions
-    Plugin 'ycm-core/YouCompleteMe'             " Code completion, comprehension, refactoring engine
-    Plugin 'tpope/vim-commentary'               " Comment stuff out
-    Plugin 'plasticboy/vim-markdown'            " Markdown support
-    Plugin 'JamshedVesuna/vim-markdown-preview' " Markdown preview
-    Plugin 'honza/vim-snippets'                 " Useful snippet files for various programming languages
-    Plugin 'lervag/vimtex'                      " LaTeX support
-    Plugin 'KeitaNakamura/tex-conceal.vim'      " LaTeX concealment
-    Plugin 'SirVer/ultisnips'                   " Snippet tool
+    Plug 'tpope/vim-surround'                                          "  Parentheses, brackets, quotes, XML tags, and more
+    Plug 'tpope/vim-repeat'                                            "  Repeat plugin-enabled actions
+    Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }      "  Code completion, comprehension, refactoring engine
+    Plug 'tpope/vim-commentary'                                        "  Comment stuff out
+    Plug 'plasticboy/vim-markdown'                                     "  Markdown support
+    Plug 'JamshedVesuna/vim-markdown-preview'                          "  Markdown preview
+    Plug 'honza/vim-snippets'                                          "  Useful snippet files for various programming languages
+    Plug 'lervag/vimtex'                                               "  LaTeX support
+    Plug 'KeitaNakamura/tex-conceal.vim'                               "  LaTeX concealment
+    Plug 'SirVer/ultisnips'                                            "  Snippet tool
 
     "-------------------=== Code linting/syntax ===-------------------
-    Plugin 'dense-analysis/ale'                 " General purpose linter and fixer framework
-    Plugin 'sheerun/vim-polyglot'               " General purpose language syntax highlighter
-    Plugin 'godlygeek/tabular'                  " Tool for visual alignment
+    Plug 'dense-analysis/ale'                                          "  General purpose linter and fixer framework
+    Plug 'sheerun/vim-polyglot'                                        "  General purpose language syntax highlighter
+    Plug 'godlygeek/tabular'                                           "  Tool for visual alignment
 
     "-------------------=== Tmux/terminal interaction ===-------------
-    Plugin 'jpalardy/vim-slime'                 " Turn vim + tmux into REPL
-    Plugin 'hanschen/vim-ipython-cell'          " Slime wrapper for iPython dev
+    Plug 'jpalardy/vim-slime'                                          "  Turn vim + tmux into REPL
+    Plug 'hanschen/vim-ipython-cell'                                   "  Slime wrapper for iPython dev
 
-
-" All of your Plugins must be added before the following line
-call vundle#end()
-
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-filetype plugin indent on
-
-" To ignore plugin indent changes, instead use:
-" filetype plugin on
-
+call plug#end()
 
 "=====================================================
 "" YouCompleteMe settings
