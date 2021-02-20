@@ -1,0 +1,12 @@
+{
+  "models/*.sql": {
+    "alternate": "target/compiled/dbt_transforms/models/{dirname}/{basename}.sql",
+    "dispatch": "dbt run --partial-parse -m {basename} && dbt test -m {basename}",
+    "type": "source"
+  },
+  "target/compiled/dbt_transforms/models/*.sql": {
+    "alternate": "models/{dirname}/{basename}.sql",
+    "dispatch": "snowsql -f {file}",
+    "type": "compiled"
+  }
+}

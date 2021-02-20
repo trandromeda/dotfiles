@@ -53,7 +53,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'preservim/nerdtree'                                          "  File navigation
     Plug 'tpope/vim-fugitive'                                          "  Git wrapper
     Plug 'tpope/vim-rhubarb'                                           "  Github wrapper
-    Plug 'https://github.com/tpope/vim-projectionist'                  "  Project navigation
+    Plug 'tpope/vim-projectionist'                                     "  Project navigation
+    Plug 'tpope/vim-dispatch'                                          "  Flexible compiling
     Plug 'mhinz/vim-signify'                                           "  Show git file changes in gutter
     Plug 'mhinz/vim-signify'                                           "  Show git file changes in gutter
     Plug 'tpope/vim-unimpaired'                                        "  Useful [] mappings
@@ -137,12 +138,17 @@ nmap <leader>D <plug>(YCMHover)
 "" ALE settings
 "=====================================================
 
+" Need to implement ~/.vim/plugged/ale/ale_linters/sql/sqlfluff.vim
+" No linting will take place until that .vim file is implemented
+" Since it calls the executable and parses its output
+
 " Set linters
 let g:ale_linters = {
 \   'python': ['flake8'],
 \   'markdown': ['markdownlint'],
 \   'json': ['jq'],
 \   'yaml': ['yamllint'],
+"\   'sql': ['sqlfluff'],
 \}
 
 " Set fixers
@@ -152,6 +158,7 @@ let g:ale_fixers = {
 \   'markdown': ['prettier'],
 \   'json': ['jq'],
 \   'yaml': ['prettier'],
+"\   'sql': ['sqlfluff'],
 \}
 
 " Set lint and fix occasions
@@ -308,7 +315,7 @@ let g:UltiSnipsEnableSnipMate = 0
 let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/bundle/vim-snippets/UltiSnips', $HOME.'/.vim/UltiSnips']
+let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/plugged/vim-snippets/UltiSnips', $HOME.'/.vim/UltiSnips']
 
 
 "=====================================================
@@ -579,3 +586,17 @@ au BufNewFile,BufRead *.md set path+=$DBT_PROFILES_DIR/dbt/models/**
 
 " Write daily note on exit
 autocmd BufWritePost *dailynote-*.md silent! execute "!bash buildnote.sh %:p" | redraw!
+
+
+" Temporary netrw fix to open links with gx
+if has('macunix')
+  function! OpenURLUnderCursor()
+    let s:uri = matchstr(getline('.'), '[a-z]*:\/\/[^ >,;()]*')
+    let s:uri = shellescape(s:uri, 1)
+    if s:uri != ''
+      silent exec "!open '".s:uri."'"
+      :redraw!
+    endif
+  endfunction
+  nnoremap gx :call OpenURLUnderCursor()<CR>
+endif
