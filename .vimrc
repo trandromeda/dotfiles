@@ -184,6 +184,7 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " Python
 let g:ale_python_black_auto_pipenv = 1
 let g:ale_python_flake8_auto_pipenv = 1
+let g:ale_python_flake8_options = '-c $HOME/.flake8'
 
 " Markdown
 let g:ale_markdown_markdownlint_options = '-c $HOME/.markdownlintrc'

@@ -6,20 +6,22 @@
 # This will warn/error on things that black does not fix, on purpose.
 
 [flake8]
-# max line length is set to 88 in black, here it is set to 80 and we enable bugbear's B950 warning, which is:
+# max line length is set to 88 in black, here it is set to 80 and we enable bugbear's 
+# B950 warning, which is:
 #
 # B950: Line too long. This is a pragmatic equivalent of pycodestyle’s E501: it
-# considers “max-line-length” but only triggers when the value has been
+# considers “max-line-length” but only triggers when the line length has been
+# exceeded by a considerable amount; principal is similar to the pass you get
 # if you drive < 5mph too fast. Disable E501 to avoid duplicate warnings.
 max-line-length = 80
 max-complexity = 12
 select = E,F,W,C,B,B9
 ignore =
     # E123 closing bracket does not match indentation of opening bracket’s line
-    E123
+    E123,
     # E203 whitespace before ‘:’ (Not PEP8 compliant, Python Black)
-    E203
+    E203,
     # E501 line too long (e.g., 84 > 79 characters replaced by B950 from flake8-bugbear, https://github.com/PyCQA/flake8-bugbear)
-    E501
+    E501,
     # W503 line break before binary operator (Not PEP8 compliant, Python Black)
     W503
