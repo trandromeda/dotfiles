@@ -138,6 +138,7 @@ alias alup="alias | fzf"
 alias reload="source ~/.zshrc"
 alias tldr="tldr $1 -t base16"
 alias gbol='git fetch --prune && git branch -r | awk "{print \$1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk "{print \$1}"'
+alias gsdb='~/bin/save_dangling_blob.sh'
 alias n='~/bin/makenote.sh'
 alias mrn='~/bin/getlastnote.sh'
 

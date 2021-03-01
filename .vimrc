@@ -25,6 +25,7 @@ let &t_SR = "\<Esc>[3 q"
 let &t_SI = "\<Esc>[5 q"
 autocmd BufEnter * execute 'silent !echo -ne "' . &t_EI . '"'
 
+
 "=====================================================
 "" vim-plug settings
 "=====================================================
@@ -92,6 +93,7 @@ call plug#begin('~/.vim/plugged')
 
 call plug#end()
 
+
 "=====================================================
 "" YouCompleteMe settings
 "=====================================================
@@ -133,6 +135,7 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Toggle popup window
 nmap <leader>D <plug>(YCMHover)
+
 
 "=====================================================
 "" ALE settings
@@ -189,6 +192,7 @@ let g:ale_python_flake8_options = '-c $HOME/.flake8'
 " Markdown
 let g:ale_markdown_markdownlint_options = '-c $HOME/.markdownlintrc'
 
+
 "=====================================================
 "" Airline settings
 "=====================================================
@@ -204,6 +208,7 @@ let g:airline#extensions#branch#enabled = 1
 
 " Enable ALE extensions in Airline
 let g:airline#extensions#ale#enabled = 1
+
 
 "=====================================================
 "" Fugitive / Rhubarb settings
@@ -223,7 +228,7 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 
 
 "=====================================================
-"" Fugitive / Rhubarb settings
+"" fzf-checkout settings
 "=====================================================
 
 " Define a diff of two branches with Fugitive
@@ -294,8 +299,9 @@ let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
 
-" Avoid overwriting [c, ]c maps
-let g:vim_markdown_no_default_key_mappings = 1
+" Avoid overwriting ]c map (vim-unimpaired)
+map <Plug> <Plug>Markdown_MoveToCurHeader
+
 
 "=====================================================
 "" vimtex, settings
