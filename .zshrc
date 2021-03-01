@@ -19,58 +19,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Use patched Awesome Powerline fonts (for icons)
 POWERLEVEL9K_MODE='nerdfont-complete'
 
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-
 # Required for some completion plugins (e.g., fzf-tab)
 autoload -U compinit && compinit
 
@@ -105,23 +53,6 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 ## Run oh-my-zsh script
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -142,82 +73,18 @@ alias gsdb='~/bin/save_dangling_blob.sh'
 alias n='~/bin/makenote.sh'
 alias mrn='~/bin/getlastnote.sh'
 
-
-## General custom functions
-
-function astro_ts_utc_local() {
-    # Returns UTC timestamp in Airflow format to local time
-    # e.g., 2021-02-13T01:54:59.672021Z ➔ Fri Feb 12 20:54:59 EST 2021
-    second_precision_time=$(cut -d'.' -f1 <<< ${1:-$(</dev/stdin)})
-    date -j -f "%s" $(date -j -u -f "%Y-%m-%dT%T" "${second_precision_time}" "+%s") | tee >(pbcopy)
-}
-
-
-## DBT custom functions
-
-# Cycle DBT logs
-function cycle_logs() {
-  suffix=$(date '+%Y-%m-%dT%H:%M:%S')
-  mv -v logs/dbt.log logs/dbt.log.${suffix}
-}
-
-# Run and test one model and/or its up-/down- stream dependencies
-function dbt_run_test() {
-    models=$1
-    echo "Running & testing: ${models}"
-    dbt run --models ${models} | tee && dbt test --models ${models} | tee >(pbcopy);
-}
-
-# Build downstream dependencies for all models changes in working directory
-# Takes optional argument, +, to build downstream dependencies
-function dbt_run_changed() {
-    children=$1
-    if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = "true" ]; then
-        models="$(git diff --name-only | grep '\.sql$' | awk -F '/' '{ print $NF }' | sed "s/\.sql$/${children}/g" | tr '\n' ' ')"
-        echo "Running models: ${models}"
-        dbt run --models ${models};
-    else
-        git rev-parse --git-dir > /dev/null 2>&1;
-    fi;
-}
-
-# Open dbt_transform in Github
-function ghdbt() {
-    cd $DBT_PROFILES_DIR && open $(git remote -v | grep fetch | awk '{print $2}' | sed 's/:/\//' | sed 's/git@/http:\/\//' | sed 's/\.git$/\/tree\/master\/transform\/dbt_transforms/')
-}
-
-## Github custom functions
-
-# Github open function
-function ogh() {
-    if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = "true" ]; then
-        open $(git config remote.origin.url | sed "s/git@\(.*\):\(.*\).git/https:\/\/\1\/\2/")/$1$2;
-    else
-        git rev-parse --git-dir > /dev/null 2>&1;
-    fi;
-}
-
-# Open current branch
-alias oghb="ogh tree/\$(git symbolic-ref --quiet --short HEAD)"
-
-# Open current directory/file in current branch
-alias oghbf="ogh tree/\$(git symbolic-ref --quiet --short HEAD )/\$(git rev-parse --show-prefix)"
-
-# Open current directory/file in master branch
-alias oghmf="ogh tree/master/\$(git rev-parse --show-prefix)"
-
-# Added by astro installer
-source <(kubectl completion zsh)
-[ -f /Users/rdayabhai/.oh-my-zsh/custom/.kubectl_aliases ] && source /Users/rdayabhai/.oh-my-zsh//custom/.kubectl_aliases
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+## Run custom scripts
+source ~/bin/airflow_timestamp_conversion_to_local_time.sh
+source ~/bin/dbt_helpers.sh
+bash ~/bin/localhost_bind.sh
 
 
 ### THEME/VISUAL CUSTOMIZATION ###
 
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
 # Let vi-mode plugin change cursor based on mode
 VI_MODE_SET_CURSOR=true
-
 
 # Add custom icon to prompt
 POWERLEVEL9K_CUSTOM_OS_ICON='echo 🌞'
@@ -311,9 +178,6 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 # Set the syntax highlighting theme for bat
 export BAT_THEME="Dracula"
 
-
-### FLEXPORT ###
-
 ## AWS
 
 export PATH="/usr/local/opt/awscli@1/bin:$PATH"
@@ -321,9 +185,7 @@ export PATH="/usr/local/opt/awscli@1/bin/aws_completer:$PATH"
 autoload bashcompinit && bashcompinit
 complete -C '/usr/local/opt/awscli@1/bin/aws_completer' aws
 
-
 ## DBT & Snowflake
-
 export SNOWFLAKE_WAREHOUSE_XS="DBT_DEV_XS"
 export SNOWFLAKE_WAREHOUSE_M="DBT_DEV_M"
 export SNOWFLAKE_WAREHOUSE_L="DBT_DEV_L"
@@ -333,21 +195,40 @@ export SNOWFLAKE_USER='RDAYABHAI@FLEXPORT.COM'
 export SNOWFLAKE_ROLE='SYSADMIN'
 export SNOWFLAKE_PRIVATE_KEY_PATH="~/.ssh/snowflake_key"
 
+# SnowSQL
+export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
+
+## Astro
+source <(kubectl completion zsh)
+[ -f /Users/rdayabhai/.oh-my-zsh/custom/.kubectl_aliases ] && source /Users/rdayabhai/.oh-my-zsh//custom/.kubectl_aliases
+
 ## kmo
 
 export KMO_HOME="~/code/kimono"
-
-## Github CLI
-# TODO: gist is being outcompeted by consolidated github CLI (gh)
-export GITHUB_URL="https://github.flexport.io"
-export GH_HOST="$(echo ${GITHUB_URL} | cut -c 9-)" # removes https://
-
 
 ## helm2
 export PATH="/usr/local/opt/helm@2/bin:$PATH"
 source <(helm completion zsh)
 source <(kubectl completion zsh)
 [ -f /Users/rdayabhai/.oh-my-zsh/.kubectl_aliases ] && source /Users/rdayabhai/.oh-my-zsh/.kubectl_aliases
+
+## Github CLI
+# TODO: gist is being outcompeted by consolidated github CLI (gh)
+export GITHUB_URL="https://github.flexport.io"
+export GH_HOST="$(echo ${GITHUB_URL} | cut -c 9-)" # removes https://
+
+## Datacoral CLI
+
+# Changes NVM path (required for Datacoral CLI installation)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Add to $PATH variable
+if [[ ":$PATH:" != *":$HOME/.datacoral/cli/bin:"* ]];
+then
+  export PATH=$HOME/.datacoral/cli/bin:$PATH
+fi
 
 
 ### ENVIRONMENT MANAGEMENT ###
@@ -376,17 +257,3 @@ source /Users/rdayabhai/.pyenv/versions/3.8.6/bin/virtualenvwrapper.sh
 
 # Working directory changed during the post activate phase
 export VIRTUALENVWRAPPER_WORKON_CD=1
-
-# added by Snowflake SnowSQL installer v1.2
-export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
-
-# Changes NVM path (required for Datacoral CLI installation)
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Datacoral CLI: add to $PATH variable
-if [[ ":$PATH:" != *":$HOME/.datacoral/cli/bin:"* ]];
-then
-  export PATH=$HOME/.datacoral/cli/bin:$PATH
-fi
