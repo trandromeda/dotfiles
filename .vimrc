@@ -150,8 +150,7 @@ let g:ale_linters = {
 \   'python': ['flake8'],
 \   'markdown': ['markdownlint'],
 \   'json': ['jq'],
-\   'yaml': ['yamllint'],
-"\   'sql': ['sqlfluff'],
+\   'yaml': ['yamllint']
 \}
 
 " Set fixers
@@ -160,15 +159,13 @@ let g:ale_fixers = {
 \   'python': ['black', 'isort'],
 \   'markdown': ['prettier'],
 \   'json': ['jq'],
-\   'yaml': ['prettier'],
-"\   'sql': ['sqlfluff'],
+\   'yaml': ['prettier']
 \}
 
 " Set lint and fix occasions
 let g:ale_linters_explicit = 1
 let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 1
-let g:ale_open_list = 1
 
 " Customize linter feedback visuals
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
@@ -185,9 +182,7 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " Language/env-specific settings
 
 " Python
-let g:ale_python_black_auto_pipenv = 1
-let g:ale_python_flake8_auto_pipenv = 1
-let g:ale_python_flake8_options = '-c $HOME/.flake8'
+let g:ale_python_auto_pipenv = 1
 
 " Markdown
 let g:ale_markdown_markdownlint_options = '-c $HOME/.markdownlintrc'

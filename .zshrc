@@ -245,8 +245,6 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv virtualenv-init -)"
 eval "$(pyenv init -)"
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
-# export WORKON_HOME=~/.virtualenv
-# export PROJECT_HOME=~/workspace
 
 ## virtualenvwrapper
 
