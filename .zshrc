@@ -73,11 +73,6 @@ alias gsdb='~/bin/save_dangling_blob.sh'
 alias n='~/bin/makenote.sh'
 alias mrn='~/bin/getlastnote.sh'
 
-## Run custom scripts
-source ~/bin/airflow_timestamp_conversion_to_local_time.sh
-source ~/bin/dbt_helpers.sh
-bash ~/bin/localhost_bind.sh
-
 
 ### THEME/VISUAL CUSTOMIZATION ###
 
@@ -142,15 +137,17 @@ echo -e "\033]6;1;bg;blue;brightness;33\a"
 
 ### CUSTOM ###
 
+## Run custom scripts
+source ~/bin/airflow_timestamp_conversion_to_local_time.sh
+source ~/bin/dbt_helpers.sh
+bash ~/bin/localhost_bind.sh
+
 ## Set vim as default editor
 export EDITOR=/usr/local/bin/vim
 export VISUAL=/usr/local/bin/vim
 
 ## Auto CD when path is given without command
 setopt AUTO_CD
-
-## Add location of custom Python modules to PYTHONPATH
-export PYTHONPATH="${PYTHONPATH}:~/code/analysis/custom_scripts/"
 
 ## Add Brew-installed Ruby to PATH
 export PATH="/usr/local/opt/ruby/bin:$PATH"
@@ -187,6 +184,7 @@ complete -C '/usr/local/opt/awscli@1/bin/aws_completer' aws
 
 ## DBT & Snowflake
 export SNOWFLAKE_WAREHOUSE_XS="DBT_DEV_XS"
+export SNOWFLAKE_WAREHOUSE_S="DBT_DEV_S"
 export SNOWFLAKE_WAREHOUSE_M="DBT_DEV_M"
 export SNOWFLAKE_WAREHOUSE_L="DBT_DEV_L"
 export SNOWFLAKE_USERNAME='rdayabhai@flexport.com'

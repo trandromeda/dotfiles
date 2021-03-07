@@ -2,9 +2,19 @@
 accountname = flexport
 username = rdayabhai@flexport.com
 authenticator = externalbrowser
-role = SYSADMIN 
+role = SYSADMIN
 dbname = ANALYTICS
 warehousename = REPORTING_WH
+
+[connections.ae_sandbox]
+accountname = flexport
+username = rdayabhai@flexport.com
+authenticator = externalbrowser
+role = SYSADMIN
+dbname = SANDBOX
+schema = RDAYABHAI
+warehousename = DATA_ENG_M
+
 
 [variables]
 # Loads these variables on startup
@@ -17,7 +27,7 @@ stop_on_error = True
 # paging = True
 editor = vim
 key_bindings = vi
-
+sfqid_in_error = False
 
 # Customize prompt
 prompt_format="🗄️  [#8be9fd][database] | 📂  [#50fa7b][schema] | 🏭  [#ffb86c][warehouse] "
