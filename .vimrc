@@ -150,6 +150,7 @@ let g:ale_linters = {
 \   'python': ['flake8'],
 \   'markdown': ['markdownlint'],
 \   'json': ['jq'],
+\   'sh': ['shellcheck'],
 \   'yaml': ['yamllint']
 \}
 
