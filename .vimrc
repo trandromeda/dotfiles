@@ -176,9 +176,11 @@ highlight clear ALEErrorSign
 highlight clear ALEWarningSign
 let g:ale_set_highlights = 0
 
-" Keybindings
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" Move to next warning/error (overwrites vim-unimpaired argslist)
+nmap ]a :ALENextWrap<CR>
+nmap [a :ALEPreviousWrap<CR>
+nmap ]A :ALELast<CR>
+nmap [A :ALEFirst<CR>
 
 " Language/env-specific settings
 
