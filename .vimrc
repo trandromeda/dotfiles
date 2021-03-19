@@ -89,7 +89,7 @@ call plug#begin('~/.vim/plugged')
 
     "-------------------=== Tmux/terminal interaction ===-------------
     Plug 'jpalardy/vim-slime'                                          "  Turn vim + tmux into REPL
-    Plug 'hanschen/vim-ipython-cell'                                   "  Slime wrapper for iPython dev
+    Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }              "  Slime wrapper for iPython dev
 
 call plug#end()
 
@@ -132,6 +132,9 @@ let g:ycm_key_list_previous_completion=[]
 
 " GoToDefinition
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" GetDoc
+map <leader>K :YcmCompleter GetDoc<CR>
 
 " Toggle popup window
 nmap <leader>D <plug>(YCMHover)
