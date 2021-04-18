@@ -75,6 +75,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-repeat'                                            "  Repeat plugin-enabled actions
     Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }      "  Code completion, comprehension, refactoring engine
     Plug 'tpope/vim-commentary'                                        "  Comment stuff out
+    Plug 'tpope/vim-endwise'                                           "  End certain structures automatically
+    Plug 'junegunn/rainbow_parentheses.vim'                            "  Rainbow parentheses
     Plug 'plasticboy/vim-markdown'                                     "  Markdown support
     Plug 'JamshedVesuna/vim-markdown-preview'                          "  Markdown preview
     Plug 'honza/vim-snippets'                                          "  Useful snippet files for various programming languages
@@ -150,6 +152,8 @@ nmap <leader>D <plug>(YCMHover)
 
 " Set linters
 let g:ale_linters = {
+\   'c': ['clang-format'],
+\   'cpp': ['clang-format'],
 \   'python': ['flake8'],
 \   'markdown': ['markdownlint'],
 \   'json': ['jq'],
@@ -160,6 +164,8 @@ let g:ale_linters = {
 " Set fixers
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'c': ['clang-format'],
+\   'cpp': ['clang-format'],
 \   'python': ['black', 'isort'],
 \   'markdown': ['prettier'],
 \   'json': ['jq'],
