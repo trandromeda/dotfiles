@@ -566,29 +566,6 @@ set mouse=a
 
 
 "=====================================================
-"" dbt development settings
-"=====================================================
-
-" Add .sql when typing gf (go to file under cursor if file is in same
-" directory)
-au BufNewFile,BufRead *.sql set suffixesadd+=.sql
-au BufNewFile,BufRead *.md set suffixesadd+=.sql
-au BufNewFile,BufRead *.yml set suffixesadd+=.sql
-
-" Make sure you update the paths with the location of dbt in your environment!
-" update path to look for files in dbt directories
-au BufNewFile,BufRead *.sql set path+=$DBT_PROFILES_DIR/dbt/macros/**
-au BufNewFile,BufRead *.sql set path+=$DBT_PROFILES_DIR/dbt/models/**
-
-" yml and md are for opening files from dbt docs files
-au BufNewFile,BufRead *.yml set path+=$DBT_PROFILES_DIR/dbt/macros/**
-au BufNewFile,BufRead *.yml set path+=$DBT_PROFILES_DIR/dbt/models/**
-
-au BufNewFile,BufRead *.md set path+=$DBT_PROFILES_DIR/dbt/macros/**
-au BufNewFile,BufRead *.md set path+=$DBT_PROFILES_DIR/dbt/models/**
-
-
-"=====================================================
 "" Miscellaneous settings
 "=====================================================
 

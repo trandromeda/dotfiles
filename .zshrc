@@ -20,7 +20,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 
 # Required for some completion plugins (e.g., fzf-tab)
-autoload -U compinit && compinit
+autoload -Uz compinit; compinit
+FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -63,11 +64,8 @@ alias vimconfig="vim ~/.vimrc"
 alias tmuxconfig="vim ~/.tmux.conf"
 alias ohmyzsh="cd ~/.oh-my-zsh"
 alias cls="clear"
-alias ctree="tree -C"
-alias copa="pbcopy; pbpaste"
 alias alup="alias | fzf"
 alias reload="source ~/.zshrc"
-alias tldr="tldr $1 -t base16"
 alias gbol='git fetch --prune && git branch -r | awk "{print \$1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk "{print \$1}"'
 alias gsdb='~/bin/save_dangling_blob.sh'
 alias n='~/bin/makenote.sh'
@@ -137,11 +135,6 @@ echo -e "\033]6;1;bg;blue;brightness;33\a"
 
 ### CUSTOM ###
 
-## Run custom scripts
-source ~/bin/airflow_timestamp_conversion_to_local_time.sh
-source ~/bin/dbt_helpers.sh
-bash ~/bin/localhost_bind.sh
-
 ## Set vim as default editor
 export EDITOR=/usr/local/bin/vim
 export VISUAL=/usr/local/bin/vim
@@ -175,58 +168,11 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 # Set the syntax highlighting theme for bat
 export BAT_THEME="Dracula"
 
-## AWS
-
-export PATH="/usr/local/opt/awscli@1/bin:$PATH"
-export PATH="/usr/local/opt/awscli@1/bin/aws_completer:$PATH"
-autoload bashcompinit && bashcompinit
-complete -C '/usr/local/opt/awscli@1/bin/aws_completer' aws
-
-## DBT & Snowflake
-export SNOWFLAKE_WAREHOUSE_XS="DBT_DEV_XS"
-export SNOWFLAKE_WAREHOUSE_S="DBT_DEV_S"
-export SNOWFLAKE_WAREHOUSE_M="DBT_DEV_M"
-export SNOWFLAKE_WAREHOUSE_L="DBT_DEV_L"
-export SNOWFLAKE_USERNAME='rdayabhai@flexport.com'
-export DBT_PROFILES_DIR="/Users/rdayabhai/code/kimono/transform/dbt_transforms"
-export SNOWFLAKE_USER='RDAYABHAI@FLEXPORT.COM'
-export SNOWFLAKE_ROLE='SYSADMIN'
-export SNOWFLAKE_PRIVATE_KEY_PATH="~/.ssh/snowflake_key"
-
-# SnowSQL
-export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
-
-## Astro
-source <(kubectl completion zsh)
-[ -f /Users/rdayabhai/.oh-my-zsh/custom/.kubectl_aliases ] && source /Users/rdayabhai/.oh-my-zsh//custom/.kubectl_aliases
-
-## kmo
-
-export KMO_HOME="~/code/kimono"
-
-## helm2
-export PATH="/usr/local/opt/helm@2/bin:$PATH"
-source <(helm completion zsh)
-source <(kubectl completion zsh)
-[ -f /Users/rdayabhai/.oh-my-zsh/.kubectl_aliases ] && source /Users/rdayabhai/.oh-my-zsh/.kubectl_aliases
-
 ## Github CLI
-# TODO: gist is being outcompeted by consolidated github CLI (gh)
-export GITHUB_URL="https://github.flexport.io"
+
+# Set main environment variables
+export GITHUB_URL="https://github.com"
 export GH_HOST="$(echo ${GITHUB_URL} | cut -c 9-)" # removes https://
-
-## Datacoral CLI
-
-# Changes NVM path (required for Datacoral CLI installation)
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Add to $PATH variable
-if [[ ":$PATH:" != *":$HOME/.datacoral/cli/bin:"* ]];
-then
-  export PATH=$HOME/.datacoral/cli/bin:$PATH
-fi
 
 
 ### ENVIRONMENT MANAGEMENT ###
