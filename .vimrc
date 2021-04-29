@@ -57,7 +57,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-projectionist'                                     "  Project navigation
     Plug 'tpope/vim-dispatch'                                          "  Flexible compiling
     Plug 'mhinz/vim-signify'                                           "  Show git file changes in gutter
-    Plug 'mhinz/vim-signify'                                           "  Show git file changes in gutter
     Plug 'tpope/vim-unimpaired'                                        "  Useful [] mappings
     Plug 'stsewd/fzf-checkout.vim'                                     "  Fzf + git branches and tags management
 
@@ -83,6 +82,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'lervag/vimtex'                                               "  LaTeX support
     Plug 'KeitaNakamura/tex-conceal.vim'                               "  LaTeX concealment
     Plug 'SirVer/ultisnips'                                            "  Snippet tool
+    Plug 'vim-test/vim-test'                                           "  Running tests on different granularities
 
     "-------------------=== Code linting/syntax ===-------------------
     Plug 'dense-analysis/ale'                                          "  General purpose linter and fixer framework
@@ -381,6 +381,21 @@ let g:slime_python_ipython = 1
 
 
 "=====================================================
+"" vim-test settings
+"=====================================================
+
+" Control keymappings
+nmap <silent> t<C-n> :TestNearest<CR>
+nmap <silent> t<C-f> :TestFile<CR>
+nmap <silent> t<C-s> :TestSuite<CR>
+nmap <silent> t<C-l> :TestLast<CR>
+nmap <silent> t<C-v> :TestVisit<CR>
+
+" Choose strategy to run tests
+let test#strategy = "basic"
+
+
+"=====================================================
 "" File-specific settings
 "=====================================================
 
@@ -552,10 +567,10 @@ highlight Comment cterm=italic gui=italic
 " Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
 
-" Opens an edit command with the path of the currently edited file filled in
+" Opens an edit command with path of the currently edited file filled in
 noremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
-" Opens a tab edit command with the path of the currently edited file filled
+" Opens a tab edit command with path of the currently edited file filled in
 noremap <leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 " Search mappings: These will make it so that going to the next one in a
