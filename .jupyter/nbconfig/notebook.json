@@ -1,0 +1,17 @@
+{
+  "Cell": {
+    "cm_config": {
+      "lineNumbers": true,
+      "lineWrapping": true
+    }
+  },
+  "Notebook": {
+    "Toolbar": true,
+    "Header": true
+  },
+  "load_extensions": {
+    "hinterland/hinterland": true,
+    "code_prettify/autopep8": true,
+    "table_beautifier/main": true
+  }
+}
