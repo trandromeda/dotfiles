@@ -8,7 +8,7 @@ export TERM="xterm-256color-italic"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/rdayabhai/.oh-my-zsh"
+export ZSH="${HOME}/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -193,10 +193,10 @@ export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
 ## virtualenvwrapper
 
-export VIRTUALENVWRAPPER_PYTHON=/Users/rdayabhai/.pyenv/versions/3.8.6/bin/python3
+export VIRTUALENVWRAPPER_PYTHON="${HOME}/.pyenv/versions/3.8.6/bin/python3"
 export WORKON_HOME=$HOME/venvs
 export PROJECT_HOME=$HOME/code
-source /Users/rdayabhai/.pyenv/versions/3.8.6/bin/virtualenvwrapper.sh
+source $HOME/.pyenv/versions/3.8.6/bin/virtualenvwrapper.sh
 
 # Working directory changed during the post activate phase
 export VIRTUALENVWRAPPER_WORKON_CD=1
