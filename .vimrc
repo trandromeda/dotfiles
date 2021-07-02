@@ -61,7 +61,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'stsewd/fzf-checkout.vim'                                     "  Fzf + git branches and tags management
 
     "-------------------=== Other ===-------------------------------
-    Plug 'dracula/vim', { 'name': 'dracula' }                          "  Add dracula theme
+    Plug 'dracula/vim', { 'as': 'dracula' }                          "  Add dracula theme
     Plug 'junegunn/limelight.vim'                                      "  Limelight
     Plug 'vim-airline/vim-airline'                                     "  Status bar plugin
     Plug 'vim-airline/vim-airline-themes'                              "  Status bar plugin themes
@@ -466,14 +466,16 @@ set updatetime=500
 " Syntax highlighting
 syntax on
 
+augroup dracula_customization
+  au!
+  autocmd ColorScheme dracula highlight! link SpecialKey DraculaSubtle
+  autocmd ColorScheme dracula hi CursorLine cterm=underline term=underline ctermbg=NONE
+augroup END
+
 " Set color schemes
 let g:dracula_colorterm = 0
 colorscheme dracula
 set cursorline
-hi CursorLine cterm=underline term=underline ctermbg=NONE
-
-" Ensure that changing background doesn't reset cursorline settings
-au Colorscheme * hi CursorLine cterm=underline term=underline ctermbg=NONE
 
 " Make gutter blend in with line numbers
 highlight clear SignColumn
