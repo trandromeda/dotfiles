@@ -3,7 +3,7 @@
   "default": true,
 
   // Disable line length check for tables and code blocks
-  "MD013": { "line_length": 80, "code_blocks": false, "tables": false },
+  "MD013": { "line_length": 120, "code_blocks": false, "tables": false },
 
   // Disable annoying repeated header error
   "MD024": false,

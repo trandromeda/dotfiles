@@ -175,7 +175,7 @@ let g:ale_fixers = {
 " Set lint and fix occasions
 let g:ale_linters_explicit = 1
 let g:ale_lint_on_save = 1
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 
 " Customize linter feedback visuals
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
