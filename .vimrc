@@ -92,6 +92,7 @@ call plug#begin('~/.vim/plugged')
     "-------------------=== Tmux/terminal interaction ===-------------
     Plug 'jpalardy/vim-slime'                                          "  Turn vim + tmux into REPL
     Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }              "  Slime wrapper for iPython dev
+    Plug 'tpope/vim-tbone'                                             "  Basic vim + tmux support
 
 call plug#end()
 
