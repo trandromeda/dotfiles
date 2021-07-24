@@ -101,16 +101,6 @@ call plug#end()
 "" YouCompleteMe settings
 "=====================================================
 
-" Virtualenv support
-python3 << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  exec(open(activate_this).read(), dict(__file__=activate_this))
-EOF
-
 " Pipenv support
 let pipenv_venv_path = system('pipenv --venv')
 if shell_error == 0
@@ -410,14 +400,14 @@ autocmd FileChangedShellPost *
 " Python settings
 augroup Python
     au BufNewFile,BufRead *.py
-      \ set tabstop=4 shiftwidth=4 expandtab textwidth=80 fileformat=unix
+      \ set tabstop=4 shiftwidth=4 expandtab textwidth=80
       \ autoindent smartindent
 augroup END
 
 " SQL settings
 augroup SQL
     au BufNewFile,BufRead *.sql
-      \ set tabstop=2 shiftwidth=2 expandtab textwidth=120 autoindent fileformat=unix
+      \ set tabstop=2 shiftwidth=2 expandtab textwidth=120 autoindent
       \ commentstring=--\ %s
 augroup END
 
