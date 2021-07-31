@@ -212,9 +212,6 @@ let g:airline#extensions#ale#enabled = 1
 "" Fugitive / Rhubarb settings
 "=====================================================
 
-" Point Fugitive to Flexport's GH instance
-let g:github_enterprise_urls = ['https://github.flexport.io']
-
 " Make going up a level easier for buffers with tree or blob
 autocmd User fugitive
   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
