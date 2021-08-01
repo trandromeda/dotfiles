@@ -70,6 +70,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/fzf.vim'                                            "  Fuzzy finder plugins
 
     "-------------------=== Languages support ===-------------------
+    Plug 'tpope/vim-abolish'                                           "  Search, substitute, abbreviate word variations 
     Plug 'tpope/vim-surround'                                          "  Parentheses, brackets, quotes, XML tags, and more
     Plug 'tpope/vim-repeat'                                            "  Repeat plugin-enabled actions
     Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }      "  Code completion, comprehension, refactoring engine
