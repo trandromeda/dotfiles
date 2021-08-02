@@ -222,6 +222,9 @@ autocmd User fugitive
 " Autoclean buffer when traversing git repo
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
+" Diff remaps
+nmap <leader>gh diffget //2<CR>
+nmap <leader>gl diffget //3<CR>
 
 "=====================================================
 "" fzf-checkout settings
