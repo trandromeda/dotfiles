@@ -500,6 +500,9 @@ set wildignore+=**/.git/**
 " Search down into subfolders
 set path+=**
 
+" Copy filename to clipboard
+noremap <silent> <F4> :let @+=expand("%:p")<CR>
+
 " Easier split navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
