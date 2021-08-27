@@ -182,6 +182,9 @@ export GH_HOST="$(echo ${GITHUB_URL} | cut -c 9-)" # removes https://
 # Shell completions
 eval "$(pipenv --completion)"
 
+# Big Sur bug workaround: https://github.com/pypa/pipenv/issues/4564
+export SYSTEM_VERSION_COMPAT=1
+
 ## pyenv + pyenv-virtualenv
 
 export PYENV_ROOT="$HOME/.pyenv"
@@ -191,12 +194,8 @@ eval "$(pyenv virtualenv-init -)"
 eval "$(pyenv init -)"
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
-## virtualenvwrapper
+# added by Snowflake SnowSQL installer v1.2
+export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
+source ~/.snowsql/snowsql_pwd.zsh
 
-export VIRTUALENVWRAPPER_PYTHON="${HOME}/.pyenv/versions/3.8.6/bin/python3"
-export WORKON_HOME=$HOME/venvs
-export PROJECT_HOME=$HOME/code
-source $HOME/.pyenv/versions/3.8.6/bin/virtualenvwrapper.sh
 
-# Working directory changed during the post activate phase
-export VIRTUALENVWRAPPER_WORKON_CD=1
