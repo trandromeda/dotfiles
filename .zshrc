@@ -70,7 +70,7 @@ alias gbol='git fetch --prune && git branch -r | awk "{print \$1}" | egrep -v -f
 alias gsdb='~/bin/save_dangling_blob.sh'
 alias n='~/bin/makenote.sh'
 alias mrn='~/bin/getlastnote.sh'
-
+alias ctags="$(brew --prefix)/bin/ctags"
 
 ### THEME/VISUAL CUSTOMIZATION ###
 
@@ -198,4 +198,5 @@ export PYTHON_CONFIGURE_OPTS="--enable-framework"
 export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
 source ~/.snowsql/snowsql_pwd.zsh
 
-
+# dbt
+source ~/.dbt/dbt_env.zsh

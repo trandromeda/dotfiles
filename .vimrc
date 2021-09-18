@@ -582,6 +582,9 @@ vnoremap K :m '<-2<CR>gv=gv
 " Mouse scroll behavior
 set mouse=a
 
+" Set tags file location
+set tags=tags
+
 
 "=====================================================
 "" Miscellaneous settings
