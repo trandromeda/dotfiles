@@ -43,6 +43,8 @@ plugins=(
     virtualenv
     zsh-z
     tmux
+    docker
+    docker-compose
 )
 
 # Configure fzf, fzf-tab display settings
