@@ -195,10 +195,3 @@ eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 eval "$(pyenv init -)"
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
-
-# added by Snowflake SnowSQL installer v1.2
-export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
-source ~/.snowsql/snowsql_pwd.zsh
-
-# dbt
-source ~/.dbt/dbt_env.zsh
