@@ -70,7 +70,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/fzf.vim'                                            "  Fuzzy finder plugins
 
     "-------------------=== Languages support ===-------------------
-    Plug 'tpope/vim-abolish'                                           "  Search, substitute, abbreviate word variations 
+    Plug 'tpope/vim-abolish'                                           "  Search, substitute, abbreviate word variations
     Plug 'tpope/vim-surround'                                          "  Parentheses, brackets, quotes, XML tags, and more
     Plug 'tpope/vim-repeat'                                            "  Repeat plugin-enabled actions
     Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }      "  Code completion, comprehension, refactoring engine
@@ -120,6 +120,8 @@ let g:ycm_extra_conf_vim_data = [
 let g:ycm_global_ycm_extra_conf = '~/.global_ycm_extra_config.py'
 
 " Custom mappings and settings
+let g:ycm_error_symbol = '❌'
+let g:ycm_warning_symbol = '⚠️ '
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_key_list_select_completion=[]
 let g:ycm_key_list_previous_completion=[]
@@ -144,8 +146,7 @@ nmap <leader>D <plug>(YCMHover)
 
 " Set linters
 let g:ale_linters = {
-\   'c': ['clang-format'],
-\   'cpp': ['clang-format'],
+\   'c': ['cc'],
 \   'python': ['flake8'],
 \   'markdown': ['markdownlint'],
 \   'json': ['jq'],
@@ -157,7 +158,6 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'c': ['clang-format'],
-\   'cpp': ['clang-format'],
 \   'python': ['black', 'isort'],
 \   'markdown': ['prettier'],
 \   'json': ['jq'],
@@ -398,6 +398,13 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
 autocmd FileChangedShellPost *
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
+" C settings
+augroup C
+    au BufNewFile,BufRead *.{c,cpp}
+      \ set tabstop=4 shiftwidth=4 expandtab textwidth=80
+      \ autoindent smartindent
+augroup END
+
 " Python settings
 augroup Python
     au BufNewFile,BufRead *.py
@@ -526,7 +533,7 @@ set ignorecase
 set smartcase
 
 " Shortcut for search and replace a word
-nnoremap <leader>sw :%s/\<<C-r><C-w>\>//g<Left><Left>
+nnoremap <leader>srw :%s/\<<C-r><C-w>\>//g<Left><Left>
 
 " Set UTF-8 by default
 set enc=utf-8
