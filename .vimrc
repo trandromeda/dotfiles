@@ -61,7 +61,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'stsewd/fzf-checkout.vim'                                     "  Fzf + git branches and tags management
 
     "-------------------=== Other ===-------------------------------
-    Plug 'dracula/vim', { 'as': 'dracula' }                          "  Add dracula theme
+    Plug 'dracula/vim', { 'as': 'dracula' }                            "  Add dracula theme
     Plug 'junegunn/limelight.vim'                                      "  Limelight
     Plug 'vim-airline/vim-airline'                                     "  Status bar plugin
     Plug 'vim-airline/vim-airline-themes'                              "  Status bar plugin themes
@@ -86,6 +86,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-test/vim-test'                                           "  Running tests on different granularities
 
     "-------------------=== Code linting/syntax ===-------------------
+    Plug 'tpope/vim-sleuth'                                            "  Auto adjust 'shiftwidth' and 'expandtab' 
     Plug 'dense-analysis/ale'                                          "  General purpose linter and fixer framework
     Plug 'sheerun/vim-polyglot'                                        "  General purpose language syntax highlighter
     Plug 'godlygeek/tabular'                                           "  Tool for visual alignment
