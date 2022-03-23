@@ -1,11 +1,21 @@
 {
   "models/*.sql": {
-    "alternate": "target/compiled/dbt_transforms/models/{dirname}/{basename}.sql",
+    "alternate": "target/compiled/chime_analytics_dbt/models/{}.sql",
     "dispatch": "dbt run -m {basename} && dbt test -m {basename}",
     "type": "source"
   },
-  "target/compiled/dbt_transforms/models/*.sql": {
-    "alternate": "models/{dirname}/{basename}.sql",
+  "target/compiled/chime_analytics_dbt/models/*.sql": {
+    "alternate": "models/{}.sql",
+    "dispatch": "snowsql -f {file}",
+    "type": "compiled"
+  },
+  "analysis/*.sql": {
+    "alternate": "target/compiled/chime_analytics_dbt/analysis/{}.sql",
+    "dispatch": "dbt compile",
+    "type": "source"
+  },
+  "target/compiled/chime_analytics_dbt/analysis/*.sql": {
+    "alternate": "analysis/{}.sql",
     "dispatch": "snowsql -f {file}",
     "type": "compiled"
   }

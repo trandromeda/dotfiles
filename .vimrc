@@ -120,6 +120,9 @@ let g:ycm_extra_conf_vim_data = [
   \]
 let g:ycm_global_ycm_extra_conf = '~/.global_ycm_extra_config.py'
 
+" Use Homebrew llvm's clangd
+let g:ycm_clangd_binary_path = trim(system('brew --prefix llvm')).'/bin/clangd'
+
 " Custom mappings and settings
 let g:ycm_error_symbol = '❌'
 let g:ycm_warning_symbol = '⚠️ '
