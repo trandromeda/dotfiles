@@ -161,7 +161,7 @@ let g:ale_linters = {
 " Set fixers
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'c': ['clang-format'],
+\   'c': ['uncrustify'],
 \   'python': ['black', 'isort'],
 \   'markdown': ['prettier'],
 \   'json': ['jq'],
