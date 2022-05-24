@@ -184,9 +184,6 @@ export GH_HOST="$(echo ${GITHUB_URL} | cut -c 9-)" # removes https://
 # Shell completions
 eval "$(_PIPENV_COMPLETE=zsh_source pipenv)"
 
-# Big Sur bug workaround: https://github.com/pypa/pipenv/issues/4564
-export SYSTEM_VERSION_COMPAT=1
-
 ## pyenv + pyenv-virtualenv
 
 export PYENV_ROOT="$HOME/.pyenv"
