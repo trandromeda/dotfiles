@@ -1,8 +1,0 @@
-" Pull settings from .vimrc
-
-source ~/.vimrc
-
-" Turn on plugins in IdeaVim
-
-set surround
-set commentary
