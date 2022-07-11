@@ -67,17 +67,16 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/rainbow_parentheses.vim'                            "  Rainbow parentheses
     Plug 'plasticboy/vim-markdown'                                     "  Markdown support
     Plug 'JamshedVesuna/vim-markdown-preview'                          "  Markdown preview
-    Plug 'honza/vim-snippets'                                          "  Useful snippet files for various programming languages
+    Plug 'SirVer/ultisnips'                                            "  Ultisnips engine
+    Plug 'honza/vim-snippets'                                          "  Snippet files for various programming languages
     Plug 'lervag/vimtex'                                               "  LaTeX support
     Plug 'KeitaNakamura/tex-conceal.vim'                               "  LaTeX concealment
-    Plug 'SirVer/ultisnips'                                            "  Snippet tool
 
     "-------------------=== Code linting/syntax ===-------------------
     Plug 'tpope/vim-sleuth'                                            "  Auto adjust 'shiftwidth' and 'expandtab' 
     Plug 'dense-analysis/ale'                                          "  General purpose linter and fixer framework
     Plug 'sheerun/vim-polyglot'                                        "  General purpose language syntax highlighter
     Plug 'tpope/vim-surround'                                          "  Parentheses, brackets, quotes, XML tags, and more
-    Plug 'jiangmiao/auto-pairs'                                        "  Insert or delete brackets, parens, quotes in pairs
     Plug 'godlygeek/tabular'                                           "  Tool for visual alignment
 
     "-------------------=== Tmux/terminal interaction ===-------------
@@ -86,6 +85,31 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-tbone'                                             "  Basic vim + tmux support
 
 call plug#end()
+
+
+"=====================================================
+"" CoC settings
+"=====================================================
+
+set completeopt=longest,menuone
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 
 "=====================================================
@@ -268,6 +292,15 @@ let g:vimtex_fold_enabled = 1
 
 
 "=====================================================
+"" Tex-conceal settings
+"=====================================================
+
+set conceallevel=1
+let g:tex_conceal='abdmg'
+hi Conceal ctermbg=none
+
+
+"=====================================================
 "" UltiSnips settings
 "=====================================================
 
@@ -276,15 +309,6 @@ let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/plugged/vim-snippets/UltiSnips', $HOME.'/.vim/UltiSnips']
-
-
-"=====================================================
-"" Tex-conceal settings
-"=====================================================
-
-set conceallevel=1
-let g:tex_conceal='abdmg'
-hi Conceal ctermbg=none
 
 
 "=====================================================
