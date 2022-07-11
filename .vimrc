@@ -37,17 +37,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall | source ~/.vimrc
 endif
 
-" Compile YCM
-function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !python3 $HOME/.vim/plugged/YouCompleteMe/install.py --all
-  endif
-endfunction
-
 call plug#begin('~/.vim/plugged')
 
     "-------------------=== Code/Project navigation ===-------------
@@ -68,14 +57,13 @@ call plug#begin('~/.vim/plugged')
     Plug 'ryanoasis/vim-devicons'                                      "  Adds icons to vim plugins
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'                                            "  Fuzzy finder plugins
+    Plug 'vim-test/vim-test'                                           "  Running tests on different granularities
 
     "-------------------=== Languages support ===-------------------
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}                    "  Autocompletion, and additional text editing support
     Plug 'tpope/vim-abolish'                                           "  Search, substitute, abbreviate word variations
-    Plug 'tpope/vim-surround'                                          "  Parentheses, brackets, quotes, XML tags, and more
     Plug 'tpope/vim-repeat'                                            "  Repeat plugin-enabled actions
-    Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }      "  Code completion, comprehension, refactoring engine
     Plug 'tpope/vim-commentary'                                        "  Comment stuff out
-    Plug 'tpope/vim-endwise'                                           "  End certain structures automatically
     Plug 'junegunn/rainbow_parentheses.vim'                            "  Rainbow parentheses
     Plug 'plasticboy/vim-markdown'                                     "  Markdown support
     Plug 'JamshedVesuna/vim-markdown-preview'                          "  Markdown preview
@@ -83,12 +71,13 @@ call plug#begin('~/.vim/plugged')
     Plug 'lervag/vimtex'                                               "  LaTeX support
     Plug 'KeitaNakamura/tex-conceal.vim'                               "  LaTeX concealment
     Plug 'SirVer/ultisnips'                                            "  Snippet tool
-    Plug 'vim-test/vim-test'                                           "  Running tests on different granularities
 
     "-------------------=== Code linting/syntax ===-------------------
     Plug 'tpope/vim-sleuth'                                            "  Auto adjust 'shiftwidth' and 'expandtab' 
     Plug 'dense-analysis/ale'                                          "  General purpose linter and fixer framework
     Plug 'sheerun/vim-polyglot'                                        "  General purpose language syntax highlighter
+    Plug 'tpope/vim-surround'                                          "  Parentheses, brackets, quotes, XML tags, and more
+    Plug 'jiangmiao/auto-pairs'                                        "  Insert or delete brackets, parens, quotes in pairs
     Plug 'godlygeek/tabular'                                           "  Tool for visual alignment
 
     "-------------------=== Tmux/terminal interaction ===-------------
@@ -97,47 +86,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-tbone'                                             "  Basic vim + tmux support
 
 call plug#end()
-
-
-"=====================================================
-"" YouCompleteMe settings
-"=====================================================
-
-" Pipenv support
-let pipenv_venv_path = system('pipenv --venv')
-if shell_error == 0
-  let venv_path = substitute(pipenv_venv_path, '\n', '', '')
-  let g:ycm_python_interpreter_path = venv_path . '/bin/python'
-else
-  let g:ycm_python_interpreter_path = 'python'
-endif
-
-" Use Vim to configure interpreter and paths to add to sys.path
-let g:ycm_python_sys_path = []
-let g:ycm_extra_conf_vim_data = [
-  \  'g:ycm_python_interpreter_path',
-  \  'g:ycm_python_sys_path'
-  \]
-let g:ycm_global_ycm_extra_conf = '~/.global_ycm_extra_config.py'
-
-" Use Homebrew llvm's clangd
-let g:ycm_clangd_binary_path = trim(system('brew --prefix llvm')).'/bin/clangd'
-
-" Custom mappings and settings
-let g:ycm_error_symbol = '❌'
-let g:ycm_warning_symbol = '⚠️ '
-let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_key_list_select_completion=[]
-let g:ycm_key_list_previous_completion=[]
-
-" GoToDefinition
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-" GetDoc
-map <leader>K :YcmCompleter GetDoc<CR>
-
-" Toggle popup window
-nmap <leader>D <plug>(YCMHover)
 
 
 "=====================================================
@@ -153,6 +101,7 @@ let g:ale_linters = {
 \   'c': ['cc'],
 \   'python': ['flake8'],
 \   'markdown': ['markdownlint'],
+\   'javascript': ['eslint'],
 \   'json': ['jq'],
 \   'sh': ['shellcheck'],
 \   'yaml': ['yamllint']
@@ -164,6 +113,7 @@ let g:ale_fixers = {
 \   'c': ['uncrustify'],
 \   'python': ['black', 'isort'],
 \   'markdown': ['prettier'],
+\   'javascript': ['prettier'],
 \   'json': ['jq'],
 \   'yaml': ['prettier']
 \}
@@ -308,7 +258,7 @@ map <Plug> <Plug>Markdown_MoveToCurHeader
 
 "=====================================================
 "" vimtex, settings
-"=====================================================
+"====================================================d
 
 let g:tex_flavor= 'latex'
 let g:vimtex_view_method = 'skim'
@@ -406,7 +356,7 @@ autocmd FileChangedShellPost *
 augroup C
     au BufNewFile,BufRead *.{c,cpp}
       \ set tabstop=4 shiftwidth=4 expandtab textwidth=80
-      \ autoindent smartindent
+      \ autoindent smartindent noshowmatch
 augroup END
 
 " Python settings
@@ -414,6 +364,13 @@ augroup Python
     au BufNewFile,BufRead *.py
       \ set tabstop=4 shiftwidth=4 expandtab textwidth=80
       \ autoindent smartindent
+augroup END
+
+" Javascript settings
+augroup Javascript
+    au BufNewFile,BufRead *.js
+      \ set tabstop=4 softtabstop=4 shiftwidth=4 expandtab textwidth=80
+      \ autoindent smartindent noshowmatch
 augroup END
 
 " SQL settings
@@ -432,9 +389,6 @@ augroup Textfiles
   autocmd FileType latex,tex,md,markdown syn region match start=/\\$\\$/ end=/\\$\\$/
   autocmd FileType latex,tex,md,markdown syn match math '\\$[^$].\{-}\$'
 
-  " For markdown, hardwrap text at 80 characters
-  autocmd FileType md,markdown set textwidth=80 formatoptions+=t
-
   " Fix spelling mistakes on fly
   autocmd FileType latex,tex,md,markdown inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
@@ -448,6 +402,10 @@ augroup YAML
       \ set filetype=yaml sts=2 sw=2 expandtab
 augroup END
 
+" JSON settings
+augroup JSON
+  autocmd FileType json syntax match Comment +\/\/.\+$+
+augroup END
 
 "=====================================================
 "" General settings
@@ -603,7 +561,6 @@ set tags=tags
 
 " Write daily note on exit
 autocmd BufWritePost *dailynote-*.md silent! execute "!bash buildnote.sh %:p" | redraw!
-
 
 " Temporary netrw fix to open links with gx
 if has('macunix')
