@@ -32,7 +32,8 @@
     "typeParameter": "\uf728",
     "default": "\uf29c"
   },
-
+  // Play nice with ALE
+  "diagnostic.displayByAle": true,
   // UltiSnips integration
   "snippets.ultisnips.directories": ["~/.vim/Ultisnips"],
   "snippets.extends": {

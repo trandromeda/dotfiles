@@ -93,8 +93,17 @@ call plug#end()
 
 set completeopt=longest,menuone
 
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -106,12 +115,8 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
 "" coc-snippets
+
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
 
@@ -160,6 +165,9 @@ let g:ale_fixers = {
 \   'yaml': ['prettier']
 \}
 
+" Play nice with CoC
+let g:ale_disable_lsp = 1
+
 " Set lint and fix occasions
 let g:ale_linters_explicit = 1
 let g:ale_lint_on_save = 1
@@ -179,7 +187,7 @@ nmap [a :ALEPreviousWrap<CR>
 nmap ]A :ALELast<CR>
 nmap [A :ALEFirst<CR>
 
-" Language/env-specific settings
+"" Language/env-specific settings
 
 " Python
 let g:ale_python_auto_pipenv = 1
@@ -395,58 +403,58 @@ autocmd FileChangedShellPost *
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 " C settings
-augroup C
-    au BufNewFile,BufRead *.{c,cpp}
+augroup C autocmd!
+    au BufNewFile,BufRead *.{c,cpp,h}
       \ set tabstop=4 shiftwidth=4 expandtab textwidth=80
       \ autoindent smartindent noshowmatch
 augroup END
 
 " Python settings
-augroup Python
+augroup Python autocmd!
     au BufNewFile,BufRead *.py
       \ set tabstop=4 shiftwidth=4 expandtab textwidth=80
       \ autoindent smartindent
 augroup END
 
 " Javascript settings
-augroup Javascript
+augroup Javascript autocmd!
     au BufNewFile,BufRead *.js
       \ set tabstop=4 softtabstop=4 shiftwidth=4 expandtab textwidth=80
       \ autoindent smartindent noshowmatch
 augroup END
 
 " SQL settings
-augroup SQL
+augroup SQL autocmd!
     au BufNewFile,BufRead *.sql
       \ set tabstop=2 shiftwidth=2 expandtab textwidth=120 autoindent
       \ commentstring=--\ %s
 augroup END
 
 " Textfile settings
-augroup Textfiles
-  autocmd BufNewFile,BufRead *.{md,markdown,mdown,mkd,mdtxt,Rmd,mkdn,tex,latex}
-    \ set spell conceallevel=2 linebreak spelllang=en_us
+augroup Textfiles autocmd!
+    au BufNewFile,BufRead *.{md,markdown,mdown,mkd,mdtxt,Rmd,mkdn,tex,latex}
+      \ set spell conceallevel=2 linebreak spelllang=en_us
 
-  " Proper syntax highlighting for math mode
-  autocmd FileType latex,tex,md,markdown syn region match start=/\\$\\$/ end=/\\$\\$/
-  autocmd FileType latex,tex,md,markdown syn match math '\\$[^$].\{-}\$'
+    " Proper syntax highlighting for math mode
+    au FileType latex,tex,md,markdown syn region match start=/\\$\\$/ end=/\\$\\$/
+    au FileType latex,tex,md,markdown syn match math '\\$[^$].\{-}\$'
 
-  " Fix spelling mistakes on fly
-  autocmd FileType latex,tex,md,markdown inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+    " Fix spelling mistakes on fly
+    au FileType latex,tex,md,markdown inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
-  " Change SpellBad format (ALE uses SpellBad for lint highlighting)
-  autocmd FileType latex,tex,md,markdown highlight SpellBad ctermbg=None cterm=underline,bold ctermfg=9
+    " Change SpellBad format (ALE uses SpellBad for lint highlighting)
+    au FileType latex,tex,md,markdown highlight SpellBad ctermbg=None cterm=underline,bold ctermfg=9
 augroup END
 
 " YAML settings
-augroup YAML
-    autocmd BufNewFile,BufRead *.{yaml,yml}
+augroup YAML autocmd!
+    au BufNewFile,BufRead *.{yaml,yml}
       \ set filetype=yaml sts=2 sw=2 expandtab
 augroup END
 
 " JSON settings
-augroup JSON
-  autocmd FileType json syntax match Comment +\/\/.\+$+
+augroup JSON autocmd! 
+  au FileType json syntax match Comment +\/\/.\+$+
 augroup END
 
 "=====================================================
