@@ -1,19 +1,10 @@
 [connections]
-accountname = flexport
-username = rdayabhai@flexport.com
-authenticator = externalbrowser
-role = SYSADMIN
-dbname = ANALYTICS
-warehousename = REPORTING_WH
-
-[connections.ae_sandbox]
-accountname = flexport
-username = rdayabhai@flexport.com
-authenticator = externalbrowser
-role = SYSADMIN
-dbname = SANDBOX
-schema = RDAYABHAI
-warehousename = DATA_ENG_M
+accountname =
+username =
+authenticator =
+role =
+dbname =
+warehousename =
 
 
 [variables]
