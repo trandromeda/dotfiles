@@ -47,7 +47,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-dispatch'                                          "  Flexible compiling
     Plug 'mhinz/vim-signify'                                           "  Show git file changes in gutter
     Plug 'tpope/vim-unimpaired'                                        "  Useful [] mappings
-    Plug 'stsewd/fzf-checkout.vim'                                     "  Fzf + git branches and tags management
 
     "-------------------=== Other ===-------------------------------
     Plug 'dracula/vim', { 'as': 'dracula' }                            "  Add dracula theme
