@@ -145,7 +145,7 @@ xmap <leader>x  <Plug>(coc-convert-snippet)
 " Set linters
 let g:ale_linters = {
 \   'c': ['cc'],
-\   'python': ['flake8'],
+\   'python': ['flake8', 'pylint'],
 \   'markdown': ['markdownlint'],
 \   'javascript': ['eslint'],
 \   'json': ['jq'],
