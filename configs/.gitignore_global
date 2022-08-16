@@ -2,6 +2,5 @@
 .DS_Store
 *.swp
 *.log
-.idea/
 .ipynb_checkpoints
 __pycache__/

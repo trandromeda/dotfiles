@@ -7,8 +7,12 @@ export TERM="xterm-256color-italic"
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
+# Skip verification of insecure directories for completions
+ZSH_DISABLE_COMPFIX="true"
+
+# Paths to your oh-my-zsh installation.
 export ZSH="${HOME}/.oh-my-zsh"
+ZSH_CUSTOM="${HOME}/.oh-my-zsh/custom/"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -21,6 +25,7 @@ POWERLEVEL9K_MODE='nerdfont-complete'
 
 # Required for some completion plugins (e.g., fzf-tab)
 autoload -Uz compinit; compinit
+
 FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 
 # Which plugins would you like to load?
@@ -28,6 +33,7 @@ FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+
 plugins=(
     # sourcing vi-mode first so fzf keybindings don't get overwritten
     vi-mode
@@ -192,6 +198,3 @@ eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 eval "$(pyenv init -)"
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
-
-# added by Snowflake SnowSQL installer v1.2
-export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
