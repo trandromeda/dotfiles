@@ -19,9 +19,6 @@ _success() {
 }
 
 download_dotfiles() {
-    _process "→ Creating directory at ${DIR} and setting permissions"
-    mkdir -p "${DIR}"
-
     _process "→ Downloading repository to /tmp directory"
     curl -#fLo /tmp/${GITHUB_REPO}.tar.gz "https://github.com/${GITHUB_USER}/${GITHUB_REPO}/tarball/master"
 
@@ -117,22 +114,19 @@ install_custom() {
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
   git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm && chmod 755 ${HOME}/.tmux
 
+  # Set a custom wallpaper image
+  osascript -e 'tell application "Finder" to set desktop picture to POSIX file "'"${DIR}/desktop/default_background.jpg"'"'
+
   [[ $? ]] && _success "All custom code installed"
 }
 
 manual_preadjustments() {
-  # Make .vim directory
+  # Make directories
+  _process "→ Creating directory at ${HOME}/.vim"
   mkdir -p ${HOME}/.vim
 
   # Oh-My-Zsh 
   sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-  # TERMINFO that adds the escape sequences for italic characters; will likely need to manually
-  # run this command in zsh directly as well
-  tic ${DIR}/configs/xterm-256color-italic.terminfo
-
-  # Set a custom wallpaper image
-  osascript -e 'tell application "Finder" to set desktop picture to POSIX file "'"${DIR}/desktop/default_background.jpg"'"'
 
   [[ $? ]] && _success "Manual adjustments made successfully"
 }
@@ -150,14 +144,14 @@ update_macos_settings() {
 }
 
 install() {
+  download_dotfiles
   manual_preadjustments
   install_homebrew
   install_formulae
-  download_dotfiles
   link_dotfiles
   install_custom
   # TODO: Fix macOS settings setup script
-  # update_macos_settings
+  update_macos_settings
 }
 
 install
