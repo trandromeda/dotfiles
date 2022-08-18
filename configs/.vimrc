@@ -92,7 +92,12 @@ call plug#end()
 
 set completeopt=longest,menuone
 
-" GoTo code navigation.
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" GoTo code navigation
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -113,6 +118,9 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+
+" Install plugins
+let g:coc_global_extensions = ['coc-snippets', 'coc-clangd', 'coc-jedi', 'coc-prettier', 'coc-sqlfluff', 'coc-json', 'coc-yaml']
 
 "" coc-snippets
 
