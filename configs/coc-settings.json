@@ -39,5 +39,6 @@
   "snippets.extends": {
     "cpp": ["c"],
     "dbt": ["sql", "sqlfluff"]
-  }
+  },
+  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.3/clangd_15.0.3/bin/clangd"
 }
