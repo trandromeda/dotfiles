@@ -3,6 +3,7 @@ tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
 brew "python@3.11"
+brew "bat" # cat clone with syntax highlighting
 brew "bpython" # fancy interface to Python interpreter
 brew "docker"
 brew "exa" # modern replacement for ls
@@ -18,11 +19,13 @@ brew "rust"
 brew "pandoc" # markup format conversion
 brew "pipenv" # package manager for Python
 brew "prettier"
+brew "pure" # minimal prompt for zsh
 brew "shellcheck" # ling shell scripts
 brew "tldr" # community-driven man pages
 brew "tmux"
 brew "tree" # display directories as trees
 brew "wget" # internet file retriever
+brew "zsh-vi-mode" # vi keybindings for zsh
 cask "arc" # browser
 cask "discord"
 cask "docker"

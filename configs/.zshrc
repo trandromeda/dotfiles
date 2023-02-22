@@ -1,9 +1,5 @@
 ### SHELL APPEARANCE / BEHAVIOR ###
 
-# Set environment variable so terminal emulators (JupyterLab)
-# can use a richer set of colors and Dracula theme can render italics
-export TERM="xterm-256color-italic"
-
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -18,15 +14,19 @@ ZSH_CUSTOM="${HOME}/.oh-my-zsh/custom/"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME=""
 
-# Use patched Awesome Powerline fonts (for icons)
-POWERLEVEL9K_MODE='nerdfont-complete'
+# only needed for non-brew installs e.g. Windows
+# fpath+=$HOME/.zsh/pure
+fpath+=("$(brew --prefix)/share/zsh/site-functions")
+
+autoload -U promptinit; promptinit
+zstyle :prompt:pure:path color white
+
+prompt pure
 
 # Required for some completion plugins (e.g., fzf-tab)
 autoload -Uz compinit; compinit
-
-FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -35,28 +35,26 @@ FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 # Add wisely, as too many plugins slow down shell startup.
 
 plugins=(
-    # sourcing vi-mode first so fzf keybindings don't get overwritten
-    vi-mode
+    zsh-vi-mode
     git
-    gitfast
     colored-man-pages
     fzf
     fzf-tab
-    ripgrep
-    aws
     zsh-autosuggestions
     zsh-syntax-highlighting
-    virtualenv
     zsh-z
     tmux
-    docker
-    docker-compose
 )
 
 # Configure fzf, fzf-tab display settings
+
+# disable sort when completing `git checkout`
 zstyle ":completion:*:git-checkout:*" sort false
+# set descriptions format to enable group support
 zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# preview directory's content with exa when completing cd
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 
 ## Run oh-my-zsh script
@@ -71,81 +69,24 @@ alias zshconfig="vim ~/.zshrc"
 alias vimconfig="vim ~/.vimrc"
 alias tmuxconfig="vim ~/.tmux.conf"
 alias ohmyzsh="cd ~/.oh-my-zsh"
-alias cls="clear"
 alias alup="alias | fzf"
 alias reload="source ~/.zshrc"
-alias gbol='git fetch --prune && git branch -r | awk "{print \$1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk "{print \$1}"'
-alias gsdb='~/bin/save_dangling_blob.sh'
-alias n='~/bin/makenote.sh'
-alias mrn='~/bin/getlastnote.sh'
-alias ctags="$(brew --prefix)/bin/ctags"
 
 ### THEME/VISUAL CUSTOMIZATION ###
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-# Let vi-mode plugin change cursor based on mode
-VI_MODE_SET_CURSOR=true
-
-# Add custom icon to prompt
-POWERLEVEL9K_CUSTOM_OS_ICON='echo 🌞'
-POWERLEVEL9K_CUSTOM_OS_ICON_BACKGROUND='black'
-
-# Abbreviate long directory paths
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-POWERLEVEL9K_SHORTEN_STRATEGY='truncate_beginning'
-
-# Elements options of left prompt (remove the @username context)
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(custom_os_icon virtualenv dir)
-
-# Elements options of right prompt
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs command_execution_time status root_indicator background_jobs)
-
-# Add a second prompt line
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-
-# Add a space in the first prompt
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%F{#8be9fd}╭─%F{black}'
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%F{#8be9fd}╰%F{yellow1}%F{khaki1}%F{cornsilk1}%f '
-
-# Virtual environment segment settings
-POWERLEVEL9K_VIRTUALENV_BACKGROUND='black'
-POWERLEVEL9K_VIRTUALENV_FOREGROUND='white'
-
-# Git status colors
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
-POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='white'
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='red'
-
-# Command execution time
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='grey'
-
-# Add a new line after the global prompt
-POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-
-# Date format
-POWERLEVEL9K_TIME_FORMAT='%D{%I:%M %p}'
-
-# Remove space on right-side prompt
-ZLE_RPROMPT_INDENT=0
 
 ## iTerm 2
 
 # Colorise the top Tabs of Iterm2 with the same color as background
 # Just change the 18/26/33 which are the rgb values
-echo -e "\033]6;1;bg;red;brightness;18\a"
-echo -e "\033]6;1;bg;green;brightness;26\a"
-echo -e "\033]6;1;bg;blue;brightness;33\a"
+# echo -e "\033]6;1;bg;red;brightness;18\a"
+# echo -e "\033]6;1;bg;green;brightness;26\a"
+# echo -e "\033]6;1;bg;blue;brightness;33\a"
 
 ### CUSTOM ###
 
 ## Set vim as default editor
-export EDITOR=/usr/local/bin/vim
-export VISUAL=/usr/local/bin/vim
+# export EDITOR=/usr/local/bin/vim
+# export VISUAL=/usr/local/bin/vim
 
 ## Auto CD when path is given without command
 setopt AUTO_CD
@@ -174,7 +115,7 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 ## bat
 
 # Set the syntax highlighting theme for bat
-export BAT_THEME="Dracula"
+export BAT_THEME="TwoDark"
 
 ## Github CLI
 
@@ -182,19 +123,10 @@ export BAT_THEME="Dracula"
 export GITHUB_URL="https://github.com"
 export GH_HOST="$(echo ${GITHUB_URL} | cut -c 9-)" # removes https://
 
+## nvm
 
-### ENVIRONMENT MANAGEMENT ###
+export NVM_DIR="$HOME/.nvm"
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
-## pipenv
-
-# Shell completions
-eval "$(_PIPENV_COMPLETE=zsh_source pipenv)"
-
-## pyenv + pyenv-virtualenv
-
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv virtualenv-init -)"
-eval "$(pyenv init -)"
-export PYTHON_CONFIGURE_OPTS="--enable-framework"
+source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
