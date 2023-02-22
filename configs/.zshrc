@@ -71,6 +71,7 @@ alias tmuxconfig="vim ~/.tmux.conf"
 alias ohmyzsh="cd ~/.oh-my-zsh"
 alias alup="alias | fzf"
 alias reload="source ~/.zshrc"
+alias python=python3
 
 ### THEME/VISUAL CUSTOMIZATION ###
 
@@ -130,3 +131,9 @@ export NVM_DIR="$HOME/.nvm"
     [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
 source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
+### Windows Only ###
+
+# For Loading the SSH key
+# /usr/bin/keychain --nogui $HOME/.ssh/id_rsa
+# source $HOME/.keychain/DESKTOP-NB83DIC-sh
