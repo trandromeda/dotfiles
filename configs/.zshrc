@@ -1,7 +1,7 @@
 ### SHELL APPEARANCE / BEHAVIOR ###
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Skip verification of insecure directories for completions
 ZSH_DISABLE_COMPFIX="true"
