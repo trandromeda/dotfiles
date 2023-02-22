@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 ## INSTALLATION
-# bash -c "$(curl -#fL raw.githubusercontent.com/Per48edjes/dotfiles/master/install.sh)"
+# bash -c "$(curl -#fL raw.githubusercontent.com/trandromeda/dotfiles/master/install.sh)"
 
 LOG="${HOME}/Library/Logs/dotfiles.log"
-GITHUB_USER="Per48edjes"
+GITHUB_USER="trandromeda"
 GITHUB_REPO="dotfiles"
-DIR="${HOME}/code/${GITHUB_REPO}"
+DIR="${HOME}/dev/${GITHUB_REPO}"
 
 _process() {
     echo "$(date) PROCESSING:  $@" >> $LOG
@@ -34,6 +34,7 @@ download_dotfiles() {
     cd "${DIR}"
 }
 
+# excluded: ['bin bin', 'configs/Ultisnips .vim/Ultisnips']
 link_dotfiles() {
     # Symlink files to the HOME directory.
     if [[ -f "${DIR}/opt/dotfiles" ]]; then
@@ -111,11 +112,7 @@ install_custom() {
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
   git clone https://github.com/agkozak/zsh-z ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-z
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
   git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm && chmod 755 ${HOME}/.tmux
-
-  # Set a custom wallpaper image
-  osascript -e 'tell application "Finder" to set desktop picture to POSIX file "'"${DIR}/desktop/default_background.jpg"'"'
 
   [[ $? ]] && _success "All custom code installed"
 }
@@ -124,6 +121,9 @@ manual_preadjustments() {
   # Make directories
   _process "→ Creating directory at ${HOME}/.vim"
   mkdir -p ${HOME}/.vim
+
+  _process "→ Creating directory at ${HOME}/.nvm"
+  mkdir -p ${HOME}/.nvm
 
   # Oh-My-Zsh 
   sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -151,7 +151,7 @@ install() {
   link_dotfiles
   install_custom
   # TODO: Fix macOS settings setup script
-  update_macos_settings
+  # update_macos_settings
 }
 
 install

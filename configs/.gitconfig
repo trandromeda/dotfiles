@@ -1,33 +1,7 @@
 [user]
-	email = r.i.dayabhai@gmail.com
-	name = Ravi Dayabhai
-
-[push]
-  default = current
-
-[alias]
+	email = transient.tran@gmail.com
+	name = Andy Tran
 
 [core]
-  editor = vim
 	excludesfile = ~/.gitignore_global
 
-[diff]
-  tool = fugitive
-
-[merge]
-	tool = fugitive
-  conflictstyle = diff3
-
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-
-[difftool "fugitive"]
-	cmd = vim -f -c \"Gvdiffsplit\" \"$MERGED\"
-
-[mergetool "fugitive"]
-	cmd = vim -f -c \"Gvdiffsplit!\" \"$MERGED\"
-[pull]
-	rebase = true
