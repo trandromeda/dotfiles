@@ -26,6 +26,7 @@ brew "tmux"
 brew "tree" # display directories as trees
 brew "wget" # internet file retriever
 brew "zsh-vi-mode" # vi keybindings for zsh
+cask "1password"
 cask "arc" # browser
 cask "discord"
 cask "docker"
@@ -38,3 +39,4 @@ cask "slack"
 cask "spotify"
 cask "todoist"
 cask "visual-studio-code"
+cask "zulip"
