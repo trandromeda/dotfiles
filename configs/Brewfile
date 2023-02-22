@@ -25,7 +25,6 @@ brew "tldr" # community-driven man pages
 brew "tmux"
 brew "tree" # display directories as trees
 brew "wget" # internet file retriever
-brew "zsh-vi-mode" # vi keybindings for zsh
 cask "1password"
 cask "arc" # browser
 cask "discord"
