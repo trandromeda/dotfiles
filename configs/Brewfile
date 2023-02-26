@@ -2,6 +2,7 @@ tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
+tap "1password/tap"
 brew "python@3.11"
 brew "bat" # cat clone with syntax highlighting
 brew "bpython" # fancy interface to Python interpreter
@@ -25,6 +26,7 @@ brew "tmux"
 brew "tree" # display directories as trees
 brew "wget" # internet file retriever
 cask "1password"
+cask "1password-cli"
 cask "arc" # browser
 cask "discord"
 cask "google-drive"
