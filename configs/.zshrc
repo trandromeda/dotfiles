@@ -35,6 +35,7 @@ autoload -Uz compinit; compinit
 # Add wisely, as too many plugins slow down shell startup.
 
 plugins=(
+    autoswitch_virtualenv
     zsh-vi-mode
     git
     colored-man-pages
@@ -72,6 +73,7 @@ alias ohmyzsh="cd ~/.oh-my-zsh"
 alias alup="alias | fzf"
 alias reload="source ~/.zshrc"
 alias python=python3
+alias pip=pip3
 
 ### THEME/VISUAL CUSTOMIZATION ###
 
@@ -129,6 +131,10 @@ export GH_HOST="$(echo ${GITHUB_URL} | cut -c 9-)" # removes https://
 export NVM_DIR="$HOME/.nvm"
     [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
     [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+
+## autoswitch-
+
+export AUTOSWITCH_DEFAULT_PYTHON="/opt/homebrew/bin/python3"
 
 ### Windows Only ###
 
