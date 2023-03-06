@@ -49,6 +49,7 @@ plugins=(
     zsh-syntax-highlighting
     zsh-z
     tmux
+    pyenv
 )
 
 # Configure fzf, fzf-tab display settings
@@ -134,9 +135,6 @@ export NVM_DIR="$HOME/.nvm"
     [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
     [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
-## autoswitch-
-
-export AUTOSWITCH_DEFAULT_PYTHON="/opt/homebrew/bin/python3"
 
 ### Windows Only ###
 
@@ -145,3 +143,12 @@ export AUTOSWITCH_DEFAULT_PYTHON="/opt/homebrew/bin/python3"
 # source $HOME/.keychain/DESKTOP-NB83DIC-sh
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# Set up environment for Pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+## autoswitch-
+
+export AUTOSWITCH_DEFAULT_PYTHON="/Users/trandromeda/.pyenv/shims/python3"
