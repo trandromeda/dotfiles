@@ -14,6 +14,11 @@ ZSH_CUSTOM="${HOME}/.oh-my-zsh/custom/"
 alias python=python3
 alias pip=pip3
 
+# Set up environment for Pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -39,6 +44,7 @@ autoload -Uz compinit; compinit
 # Add wisely, as too many plugins slow down shell startup.
 
 plugins=(
+    pyenv
     autoswitch_virtualenv
     zsh-vi-mode
     git
@@ -49,7 +55,6 @@ plugins=(
     zsh-syntax-highlighting
     zsh-z
     tmux
-    pyenv
 )
 
 # Configure fzf, fzf-tab display settings
@@ -114,6 +119,7 @@ export FZF_DEFAULT_COMMAND='rg --hidden --no-ignore --files-with-matches --follo
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='find . -d -not -path "*/\.git*" 2> /dev/null'
 
+
 # Keybinding options
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || bat --color 'always' {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
@@ -143,11 +149,6 @@ export NVM_DIR="$HOME/.nvm"
 # source $HOME/.keychain/DESKTOP-NB83DIC-sh
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-
-# Set up environment for Pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 
 ## autoswitch-
 
