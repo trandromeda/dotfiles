@@ -3,7 +3,6 @@ tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
 tap "1password/tap"
-brew "python@3.11"
 brew "bat" # cat clone with syntax highlighting
 brew "bpython" # fancy interface to Python interpreter
 brew "exa" # modern replacement for ls
@@ -15,7 +14,6 @@ brew "go"
 brew "gnupg" # for installing rvm
 brew "ipython" # interactive computing with Python
 brew "lorem" # lorem ipsum generator
-brew "ruby"
 brew "rust"
 brew "pandoc" # markup format conversion
 brew "pipenv" # package manager for Python
