@@ -12,6 +12,7 @@ brew "figlet" # print strings as ASCII art
 brew "fzf" # command-line fuzzy finder
 brew "gh" # github command-line tool
 brew "go"
+brew "gnupg" # for installing rvm
 brew "ipython" # interactive computing with Python
 brew "lorem" # lorem ipsum generator
 brew "ruby"

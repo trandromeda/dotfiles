@@ -10,6 +10,10 @@ ZSH_DISABLE_COMPFIX="true"
 export ZSH="${HOME}/.oh-my-zsh"
 ZSH_CUSTOM="${HOME}/.oh-my-zsh/custom/"
 
+# alias python
+alias python=python3
+alias pip=pip3
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -72,8 +76,6 @@ alias tmuxconfig="vim ~/.tmux.conf"
 alias ohmyzsh="cd ~/.oh-my-zsh"
 alias alup="alias | fzf"
 alias reload="source ~/.zshrc"
-alias python=python3
-alias pip=pip3
 
 ### THEME/VISUAL CUSTOMIZATION ###
 
@@ -141,3 +143,5 @@ export AUTOSWITCH_DEFAULT_PYTHON="/opt/homebrew/bin/python3"
 # For Loading the SSH key
 # /usr/bin/keychain --nogui $HOME/.ssh/id_rsa
 # source $HOME/.keychain/DESKTOP-NB83DIC-sh
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
