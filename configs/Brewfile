@@ -28,6 +28,7 @@ cask "arc" # browser
 cask "discord"
 cask "google-drive"
 cask "iterm2"
+cask "mos" # control trackpad and mouse options separately
 cask "obsidian"
 cask "rectangle" # resize windows with keyboard
 cask "signal"
