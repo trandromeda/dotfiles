@@ -95,61 +95,19 @@ alias reload="source ~/.zshrc"
 
 ### CUSTOM ###
 
-## Set vim as default editor
-# export EDITOR=/usr/local/bin/vim
-# export VISUAL=/usr/local/bin/vim
-
 ## Auto CD when path is given without command
 setopt AUTO_CD
 
-## Add Brew-installed Ruby to PATH
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-
-## fzf
-
-# Set main environment variables
-export FZF_BASE="/usr/local/bin/fzf"
-export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --inline-info --border --extended"
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
---color=dark
---color=fg:-1,bg:-1,hl:#5fff87,fg+:-1,bg+:-1,hl+:#ffaf5f
---color=info:#af87ff,prompt:#5fff87,pointer:#ff87d7,marker:#ff87d7,spinner:#ff87d7
-'
-export FZF_DEFAULT_COMMAND='rg --hidden --no-ignore --files-with-matches --follow "" -g "!{.git}/" 2> /dev/null'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND='find . -d -not -path "*/\.git*" 2> /dev/null'
-
-
-# Keybinding options
-export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || bat --color 'always' {} || tree -C {}) 2> /dev/null | head -200'"
-export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
-
-## bat
-
-# Set the syntax highlighting theme for bat
-export BAT_THEME="TwoDark"
-
-## Github CLI
-
-# Set main environment variables
-export GITHUB_URL="https://github.com"
-export GH_HOST="$(echo ${GITHUB_URL} | cut -c 9-)" # removes https://
-
 ## nvm
-
 export NVM_DIR="$HOME/.nvm"
     [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
     [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
 
 ### Windows Only ###
 
 # For Loading the SSH key
 # /usr/bin/keychain --nogui $HOME/.ssh/id_rsa
 # source $HOME/.keychain/DESKTOP-NB83DIC-sh
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-## autoswitch-
-
-export AUTOSWITCH_DEFAULT_PYTHON="/Users/trandromeda/.pyenv/shims/python3"
