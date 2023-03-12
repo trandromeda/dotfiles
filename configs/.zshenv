@@ -8,6 +8,10 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 # export EDITOR=/usr/local/bin/vim
 # export VISUAL=/usr/local/bin/vim
 
+# For compilers to find sqlite (brew installed) you may need to set:
+export LDFLAGS="-L/opt/homebrew/opt/sqlite/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/sqlite/include"
+
 ### Plugins
 
 ## fzf
