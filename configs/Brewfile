@@ -13,6 +13,7 @@ brew "go"
 brew "gnupg" # for installing rvm
 brew "lorem" # lorem ipsum generator
 brew "rustup" # rust installer
+brew "neovim"
 brew "pandoc" # markup format conversion
 brew "prettier"
 brew "pure" # minimal prompt for zsh
