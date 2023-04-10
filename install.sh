@@ -3,6 +3,9 @@
 ## INSTALLATION
 # bash -c "$(curl -#fL raw.githubusercontent.com/trandromeda/dotfiles/master/install.sh)"
 
+# more examples:
+# https://github.com/dbalatero/dotfiles/blob/0ac645cd02587086af4771d01b01df4006df87a1/tmux.conf#L9
+
 LOG="${HOME}/Library/Logs/dotfiles.log"
 GITHUB_USER="trandromeda"
 GITHUB_REPO="dotfiles"
