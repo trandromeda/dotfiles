@@ -128,7 +128,7 @@ require('lazy').setup({
   {
     'navarasu/onedark.nvim'
   },
-  { 'folke/which-key.nvim', lazy = true, opts = {} },
+  { 'folke/which-key.nvim', opts = {} },
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -184,13 +184,12 @@ require('lazy').setup({
     end
   },
   {
-    'romgrk/barbar.nvim',
-    init = function() vim.g.barbar_auto_setup = false end,
-    version = '^1.0.0', -- optional: only update when a new 1.x version is released
-  },
-  {
     'sindrets/diffview.nvim',
     dependencies = 'nvim-lua/plenary.nvim'
+  },
+  {
+    'windwp/nvim-autopairs',
+    config = function() require("nvim-autopairs").setup() end
   }
 })
 
@@ -525,7 +524,6 @@ api.nvim_exec(
   ]],
   false
 )
-
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
