@@ -3,6 +3,7 @@ tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
 tap "1password/tap"
+tap "jesseduffield/lazygit"
 brew "bat" # cat clone with syntax highlighting
 brew "exa" # modern replacement for ls
 brew "exercism"
@@ -11,6 +12,7 @@ brew "fzf" # command-line fuzzy finder
 brew "gh" # github command-line tool
 brew "go"
 brew "gnupg" # for installing rvm
+brew "lazygit" # git ui for terminal
 brew "lorem" # lorem ipsum generator
 brew "rustup" # rust installer
 brew "neovim"
@@ -18,6 +20,7 @@ brew "pandoc" # markup format conversion
 brew "prettier"
 brew "pure" # minimal prompt for zsh
 brew "pyenv" # python manager
+brew "ripgrep" # live grep telescope search
 brew "shellcheck" # ling shell scripts
 brew "sqlite" # get latest version of sqlite3
 brew "tldr" # community-driven man pages
