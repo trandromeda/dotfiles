@@ -28,6 +28,8 @@ ZSH_THEME=""
 # only needed for non-brew installs e.g. Windows
 # fpath+=$HOME/.zsh/pure
 fpath+=("$(brew --prefix)/share/zsh/site-functions")
+# for Poetry tab completions
+# fpath+=~/.zfunc
 
 autoload -U promptinit; promptinit
 zstyle :prompt:pure:path color white
@@ -45,17 +47,16 @@ autoload -Uz compinit; compinit
 
 plugins=(
     pyenv
-    autoswitch_virtualenv
     zsh-vi-mode
-    git
     colored-man-pages
     fzf
     fzf-tab
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-z
-    tmux
+    autoswitch_virtualenv
 )
+    # git
 
 # Configure fzf, fzf-tab display settings
 
@@ -77,11 +78,12 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 
 alias zshconfig="vim ~/.zshrc"
-alias vimconfig="vim ~/.vimrc"
-alias tmuxconfig="vim ~/.tmux.conf"
 alias ohmyzsh="cd ~/.oh-my-zsh"
 alias alup="alias | fzf"
 alias reload="source ~/.zshrc"
+
+# alias tmuxconfig="vim ~/.tmux.conf"
+# alias vimconfig="vim ~/.vimrc"
 
 ### THEME/VISUAL CUSTOMIZATION ###
 
