@@ -1,6 +1,10 @@
 # Rust
  . "$HOME/.cargo/env"
 
+# Go
+export GOPATH=/Users/$USER/go
+export PATH=$GOPATH/bin:$PATH
+
 # Ruby
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 
@@ -11,6 +15,9 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 # For compilers to find sqlite (brew installed) you may need to set:
 export LDFLAGS="-L/opt/homebrew/opt/sqlite/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/sqlite/include"
+
+# local/bin
+export PATH="$HOME/.local/bin:$PATH"
 
 ### Plugins
 
