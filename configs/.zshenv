@@ -7,6 +7,8 @@ export PATH=$GOPATH/bin:$PATH
 
 # Ruby
 export PATH="/usr/local/opt/ruby/bin:$PATH"
+# point to $(brew --prefix openssl@3)
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/homebrew/opt/openssl@3" # for ruby to use openssl 3
 
 ### Set vim as default editor
 # export EDITOR=/usr/local/bin/vim

@@ -1,7 +1,5 @@
 tap "homebrew/bundle"
-tap "homebrew/cask"
 tap "homebrew/cask-fonts"
-tap "homebrew/core"
 tap "1password/tap"
 tap "jesseduffield/lazygit"
 brew "bat" # cat clone with syntax highlighting
@@ -20,6 +18,8 @@ brew "pandoc" # markup format conversion
 brew "prettier"
 brew "pure" # minimal prompt for zsh
 brew "pyenv" # python manager
+brew "rbenv" # ruby manager
+brew "ruby-build" # ruby installer
 brew "ripgrep" # live grep telescope search
 brew "shellcheck" # ling shell scripts
 brew "sqlite" # get latest version of sqlite3
